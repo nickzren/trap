@@ -28,14 +28,14 @@
             <div class="container-main">                
 
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
-                    <h1>VDSdb</h1>
+                    <h2>Data Browser</h2>
 
                     <div class="row">
                         <div class="col-md-10">
                             <form class="form-search" action="Search">
                                 <div class="input-group">
                                     <input name="query" class="form-control input-lg tt-input"
-                                           type="text" placeholder="Search for a gene or region or variant" >
+                                           type="text" placeholder="Search for a ENSG gene or region or variant" >
                                     <div class="input-group-btn">
                                         <button class="btn btn-default input-lg tt-input" 
                                                 type="submit">

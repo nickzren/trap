@@ -1,9 +1,8 @@
 package object;
 
-import util.DBManager;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -12,22 +11,28 @@ import java.util.HashMap;
 public class Variant {
 
     private String chr;
-    private int position;
+    private int pos;
     private String ref;
-    private String allele;
+    private String alt;
+    HashMap<String, Float> scoreMap = new HashMap<String, Float>(); // per gene per score
 
     public static final String title
             = "Chr,"
-            + "Position,"
-            + "Ref Allele,"
-            + "Alt Allele";
+            + "Pos,"
+            + "Ref,"
+            + "Alt,"
+            + "ENSG Gene,"
+            + "Score";
 
     public Variant(ResultSet rset) throws Exception {
-        chr = rset.getString("chr");
-        position = rset.getInt("pos");
-        ref = rset.getString("ref");
-        allele = rset.getString("allele");
-
+        while (rset.next()) {
+            chr = rset.getString("chr");
+            pos = rset.getInt("pos");
+            ref = rset.getString("ref");
+            alt = rset.getString("alt");
+            
+            scoreMap.put(rset.getString("ensg_gene"), rset.getFloat("score"));
+        }
     }
 
     public String getChr() {
@@ -35,7 +40,7 @@ public class Variant {
     }
 
     public int getPosition() {
-        return position;
+        return pos;
 
     }
 
@@ -44,7 +49,7 @@ public class Variant {
     }
 
     public String getAllele() {
-        return allele;
+        return alt;
     }
 
     @Override
@@ -52,9 +57,14 @@ public class Variant {
         StringBuilder sb = new StringBuilder();
 
         sb.append(chr).append(",");
-        sb.append(position).append(",");
+        sb.append(pos).append(",");
         sb.append(ref).append(",");
-        sb.append(allele).append("\n");
+        sb.append(alt);
+
+        for (Map.Entry<String, Float> entry : scoreMap.entrySet()) {
+            sb.append(",").append(entry.getKey());
+            sb.append(",").append(entry.getValue());
+        }
 
         return sb.toString();
     }
