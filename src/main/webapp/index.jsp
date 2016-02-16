@@ -2,7 +2,23 @@
 
 <!DOCTYPE html>
 <html>    
-    <%@include file="base/head.jsp" %>
+    <head>
+        <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="VDSdb (Variant Damaging Score Data Browser) is...">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/jquery-latest.min.js"></script>    
+        <script src="js/bootstrap.min.js"></script>
+
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+        <link rel="canonical" href="http://chgv.org/GenicIntolerance/">
+    </head>
 
     <body>
         <div class="container">
