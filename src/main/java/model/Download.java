@@ -3,7 +3,7 @@ package model;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import object.Variant;
+import object.VariantGeneScore;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Download {
     }
 
     public static void generateFile() throws Exception {
-        if (!Output.variantList.isEmpty()) { // TRUE - no results from search query
+        if (!Output.variantGeneScoreList.isEmpty()) { // TRUE - no results from search query
             String folderPath = rootPath + File.separator;
 
             if (Input.query.split("-").length == 4) {
@@ -45,10 +45,10 @@ public class Download {
             if (!file.exists()) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
 
-                bw.write(Variant.title);
+                bw.write(VariantGeneScore.title);
                 bw.newLine();
 
-                for (Variant variant : Output.variantList) {
+                for (VariantGeneScore variant : Output.variantGeneScoreList) {
                     bw.write(variant.toString());
                     bw.newLine();
                 }

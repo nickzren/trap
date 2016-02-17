@@ -32,11 +32,13 @@ public class Search extends HttpServlet {
                 Input.init(request);
 
                 Output.init();
+                
+                Download.generateFile();
             }
 
             setRequest(request);
 
-            request.getRequestDispatcher("browser.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
@@ -44,7 +46,7 @@ public class Search extends HttpServlet {
 
     private void setRequest(HttpServletRequest request) {
         request.setAttribute("query", Input.query);
-        request.setAttribute("variantList", Output.variantList);
+        request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("errorMsg", Output.errorMsg);
         request.setAttribute("url", Download.url);
     }

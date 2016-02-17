@@ -1,6 +1,6 @@
 package model;
 
-import object.Variant;
+import object.VariantGeneScore;
 import util.DBManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
  */
 public class Output {
 
-    public static ArrayList<Variant> variantList = new ArrayList<Variant>();
+    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
     public static String errorMsg;
 
     public static void init() throws Exception {
-        variantList.clear();
+        variantGeneScoreList.clear();
         errorMsg = "";
 
         Download.init();
@@ -24,18 +24,17 @@ public class Output {
             initVariantListByVariantId(Input.query);
         } else if (Input.query.contains(":")) {
             initVariantListByRegion(Input.query);
-        }else {
-            initVariantListByGene(Input.query);  
+        } else {
+            initVariantListByGene(Input.query);
         }
-        
-        Download.generateFile();
     }
 
     public static void initVariantListByVariantId(String id) throws Exception {
         String[] tmp = id.split("-"); // chr-pos-ref-alt
-        
+
         String chr = tmp[0];
-        String pos = tmp[1];
+        int pos = Integer.valueOf(tmp[1]);
+        String ref = tmp[2];
         String alt = tmp[3];
 
         String sql = "SELECT * "
@@ -46,7 +45,15 @@ public class Output {
         ResultSet rset = DBManager.executeQuery(sql);
 
         while (rset.next()) {
-            variantList.add(new Variant(rset));
+            VariantGeneScore variantGeneScore = new VariantGeneScore(
+                    chr,
+                    pos,
+                    ref,
+                    alt,
+                    rset.getString("ensg_gene"),
+                    rset.getFloat("score"));
+
+            variantGeneScoreList.add(variantGeneScore);
         }
 
         rset.close();
@@ -55,7 +62,7 @@ public class Output {
     public static void initVariantListByRegion(String region) throws Exception {
         String[] tmp = region.split(":"); // chr:start-end
         String chr = tmp[0];
-        
+
         tmp = tmp[1].split("-");
         String start = tmp[0];
         String end = tmp[1];
@@ -67,13 +74,21 @@ public class Output {
         ResultSet rset = DBManager.executeQuery(sql);
 
         while (rset.next()) {
-            variantList.add(new Variant(rset));
+            VariantGeneScore variantGeneScore
+                    = new VariantGeneScore(chr,
+                            rset.getInt("pos"),
+                            rset.getString("ref"),
+                            rset.getString("alt"),
+                            rset.getString("ensg_gene"),
+                            rset.getFloat("score"));
+
+            variantGeneScoreList.add(variantGeneScore);
         }
 
         rset.close();
     }
-    
-     public static void initVariantListByGene(String gene) throws Exception {
+
+    public static void initVariantListByGene(String gene) throws Exception {
 //        String sql = "SELECT * "
 //                + "FROM snv_score_chr" + chr + " "
 //                + "WHERE pos BETWEEN " + start + " AND " + end;

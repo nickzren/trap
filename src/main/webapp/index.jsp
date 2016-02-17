@@ -47,19 +47,18 @@
                     </div>
 
                     <p class="text-muted" style="margin-left: 5px">
-                        ENSG Gene: <a href="Search?query=ENSG00000000457">ENSG00000000457</a>,
-                        Region: <a href="Search?query=21:33032075-33040899">21:33032075-33040899</a>, 
-                        Variant: <a href="Search?query=14-21162090-G-A">14-21162090-G-A</a>
+                        ENSG Gene: <a href="Search?query=ENSG00000169474">ENSG00000169474</a>,
+                        Region: <a href="Search?query=1:159409512-159410600">1:159409512-159410600</a>, 
+                        Variant: <a href="Search?query=1-153586731-T-A">1-153586731-T-A</a>
                     </p>
-
                 </div>
+
+                <%@include file="result.jsp" %>
             </div>
 
-            <br/>
-
-            <%@include file="base/counter.jsp" %>  
-
             <%@include file="base/footer.jsp" %>  
+
+            <%@include file="base/counter.jsp" %> 
         </div>
     </body>
 </html>
