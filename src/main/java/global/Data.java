@@ -1,6 +1,5 @@
 package global;
 
-
 /**
  *
  * @author nick
