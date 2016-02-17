@@ -16,8 +16,6 @@
         <script src="js/bootstrap.min.js"></script>
 
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
-        <link rel="canonical" href="http://chgv.org/GenicIntolerance/">
     </head>
 
     <body>

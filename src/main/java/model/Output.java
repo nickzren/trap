@@ -4,6 +4,7 @@ import object.VariantGeneScore;
 import util.DBManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import object.EnsgGene;
 
 /**
  *
@@ -89,16 +90,50 @@ public class Output {
     }
 
     public static void initVariantListByGene(String gene) throws Exception {
-//        String sql = "SELECT * "
-//                + "FROM snv_score_chr" + chr + " "
-//                + "WHERE pos BETWEEN " + start + " AND " + end;
-//
-//        ResultSet rset = DBManager.executeQuery(sql);
-//
-//        while (rset.next()) {
-//            variantList.add(new Variant(rset));
-//        }
-//
-//        rset.close();
+        EnsgGene ensgGene = getEnsgGene(gene);
+
+        String sql = "SELECT * "
+                + "FROM snv_score_chr" + ensgGene.getChr() + " "
+                + "WHERE pos BETWEEN " + ensgGene.getStart() + " AND " + ensgGene.getEnd() + " "
+                + "AND ensg_gene ='" + ensgGene.getName() + "'";
+
+        ResultSet rset = DBManager.executeQuery(sql);
+
+        while (rset.next()) {
+            VariantGeneScore variantGeneScore
+                    = new VariantGeneScore(
+                            ensgGene.getChr(),
+                            rset.getInt("pos"),
+                            rset.getString("ref"),
+                            rset.getString("alt"),
+                            rset.getString("ensg_gene"),
+                            rset.getFloat("score"));
+
+            variantGeneScoreList.add(variantGeneScore);
+        }
+
+        rset.close();
+    }
+
+    private static EnsgGene getEnsgGene(String gene) throws Exception {
+        String sql = "SELECT * "
+                + "FROM ensg_gene_region "
+                + "WHERE ensg_gene = '" + gene + "'";
+
+        ResultSet rset = DBManager.executeQuery(sql);
+
+        EnsgGene ensgGene = null;
+
+        if (rset.next()) {
+            ensgGene = new EnsgGene(
+                    gene,
+                    rset.getString("chr"),
+                    rset.getInt("start"),
+                    rset.getInt("end"));
+        }
+
+        rset.close();
+
+        return ensgGene;
     }
 }
