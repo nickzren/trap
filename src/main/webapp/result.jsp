@@ -4,16 +4,18 @@
 
 <div>
     <%
-//        String query = (String) request.getAttribute("query");
+        String query = (String) request.getAttribute("query");
         String url = (String) request.getAttribute("url");
         ArrayList<VariantGeneScore> variantGeneScoreList
                 = (ArrayList<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
-        if (variantGeneScoreList != null) {
+        if (query != null) {
     %>
-
     <div class="row">
         <div class="col-md-10">
+            <h4>
+                Search: <mark><%=query%></mark>
+            </h4>
         </div>
 
         <div class="col-md-2" >
@@ -25,6 +27,10 @@
         </div>
     </div>
 
+    <%
+        }
+        if (variantGeneScoreList != null) {
+    %>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -36,7 +42,6 @@
                 <th class="text-center">Score</th>
             </tr> 
         </thead>
-
         <tbody>
             <%
                 for (VariantGeneScore variant : variantGeneScoreList) {
@@ -54,7 +59,6 @@
             %>
         </tbody>
     </table>
-
     <%
         }
     %>
