@@ -26,7 +26,13 @@
             <div class="container-main">                
 
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
-                    <h2>Data Browser</h2>
+                    <h2>Data Browser 
+                        <small>
+                            <a href="download.jsp">
+                                <span class="label label-default">v1</span>
+                            </a>
+                        </small>
+                    </h2>
 
                     <div class="row">
                         <div class="col-md-10">

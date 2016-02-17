@@ -20,8 +20,9 @@
             <%@include file="base/header.jsp" %>
 
             <div class="container-main">
-                <h3 class="page-header">Download</h3>
-
+                <h3 class="page-header">Download 
+                    <span class="label label-primary">v1</span>
+                </h3>
 
                 <p class="lead">
                     <mark>The following flat files contain ...</mark>
