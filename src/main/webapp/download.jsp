@@ -30,21 +30,21 @@
 
                 <p>
                 <u>
-                    Coordinates are currently based on GRCh37 (hg19), 
-                    and represent chromosomes 1-22, X and Y.
+                    <mark>Coordinates are currently based on GRCh37 (hg19), 
+                    and represent chromosomes 1-22, X and Y.</mark>
                 </u>
                 </p>
 
                 <p>
                     <a href="">
                         <i class="fa fa-file"></i>
-                        snps_indels_v1.txt.gz
+                        variant_damaging_score_v1.gz
                     </a> 
-                    (variant file in tab-delimited text format)
+                    (variant file in <mark>???</mark> format)
                 </p>
 
                 <small>
-                    The current release (v1) was last updated on <em>02/01/2016</em>.
+                    The current release (v1) was last updated on <mark><em>?/?/2016</em></mark>.
                 </small>
             </div>
         </div>
