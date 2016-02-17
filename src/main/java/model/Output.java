@@ -62,13 +62,13 @@ public class Output {
 
     public static void initVariantListByRegion(String region) throws Exception {
         String[] tmp = region.split(":"); // chr:start-end
-        
+
         String chr = tmp[0].toLowerCase();
-        
-        if(chr.startsWith("chr")){
+
+        if (chr.startsWith("chr")) {
             chr = chr.substring(3);
         }
-        
+
         tmp = tmp[1].split("-");
         String start = tmp[0];
         String end = tmp[1];
@@ -96,6 +96,10 @@ public class Output {
 
     public static void initVariantListByGene(String gene) throws Exception {
         EnsgGene ensgGene = getEnsgGene(gene);
+
+        if (ensgGene == null) { // not a valid ensg gene
+            return;
+        }
 
         String sql = "SELECT * "
                 + "FROM snv_score_chr" + ensgGene.getChr() + " "
