@@ -21,31 +21,42 @@
 
         <div class="col-md-2" >
             <a style="float: right" href="<%=url%>" >
-                <button type="button" class="btn btn-primary" data-toggle="tooltip" 
-                        title="Download gene intolerance score information with additional fields">
-                    Download</button>
+                <button type="button" class="btn btn-primary" 
+                        <%if (url.isEmpty()){%>disabled<%}%>>
+                    <i class="fa fa-download">
+                        Download
+                    </i>
+                </button>
             </a>
         </div>
     </div>
-                
+
     <br/>
-                
-    <%}
-        if (isDownloadOnly != null && isDownloadOnly) {
-    %>
-    
-    <div>
-        <h3>
-            <span class="label label-warning">
-                Search result is too large, please click the blue 'Download' button above to download it.
-            </span>  
-        </h3> 
-    </div>
+
     <%
-        }
-        if (variantGeneScoreList != null && !variantGeneScoreList.isEmpty()) {
+        if (isDownloadOnly) {
     %>
-     
+
+    <div class="alert alert-warning" style="width:70%">
+        <h4>
+            Search result is too large, please click the blue 'Download' button above to download it.
+        </h4>
+    </div>
+
+    <%
+    } else if (variantGeneScoreList.isEmpty()) {
+    %>
+
+    <div class="alert alert-warning" style="width:30%">
+        <h4>
+            No results found from search query.
+        </h4>
+    </div>
+
+    <%
+    } else {
+    %>   
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -75,5 +86,6 @@
         </tbody>
     </table>
     <%
+                }
         }
     %>
