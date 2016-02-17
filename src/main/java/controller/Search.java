@@ -64,7 +64,7 @@ public class Search extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "alsdb search query";
+        return "vdsdb search query";
     }
 
 }
