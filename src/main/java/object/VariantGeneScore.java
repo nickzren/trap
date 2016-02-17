@@ -69,4 +69,10 @@ public class VariantGeneScore {
 
         return sb.toString();
     }
+    
+    public static void main(String[] args){
+        String chr = "chr1";
+        
+        System.out.println(chr.substring(3));
+    }
 }

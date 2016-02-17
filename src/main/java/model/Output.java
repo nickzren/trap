@@ -62,8 +62,13 @@ public class Output {
 
     public static void initVariantListByRegion(String region) throws Exception {
         String[] tmp = region.split(":"); // chr:start-end
-        String chr = tmp[0];
-
+        
+        String chr = tmp[0].toLowerCase();
+        
+        if(chr.startsWith("chr")){
+            chr = chr.substring(3);
+        }
+        
         tmp = tmp[1].split("-");
         String start = tmp[0];
         String end = tmp[1];

@@ -52,7 +52,7 @@
 
                     <p class="text-muted" style="margin-left: 5px">
                         ENSG Gene: <a href="Search?query=ENSG00000169474">ENSG00000169474</a>,
-                        Region: <a href="Search?query=1:159409512-159410600">1:159409512-159410600</a>, 
+                        Region: <a href="Search?query=1:159409112-159410200">1:159409112-159410200</a>, 
                         Variant: <a href="Search?query=1-153586731-T-A">1-153586731-T-A</a>
                     </p>
                 </div>

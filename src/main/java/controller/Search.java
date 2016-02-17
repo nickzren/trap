@@ -33,6 +33,8 @@ public class Search extends HttpServlet {
                 Output.init();
                 
                 Download.generateFile();
+                
+                Download.isDownloadOnly();
             }
 
             setRequest(request);
@@ -48,6 +50,7 @@ public class Search extends HttpServlet {
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("errorMsg", Output.errorMsg);
         request.setAttribute("url", Download.url);
+        request.setAttribute("isDownloadOnly", Download.isDownloadOnly);
     }
 
     @Override

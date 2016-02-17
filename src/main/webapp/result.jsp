@@ -6,6 +6,7 @@
     <%
         String query = (String) request.getAttribute("query");
         String url = (String) request.getAttribute("url");
+        Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
         ArrayList<VariantGeneScore> variantGeneScoreList
                 = (ArrayList<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
@@ -26,11 +27,25 @@
             </a>
         </div>
     </div>
-
+                
+    <br/>
+                
+    <%}
+        if (isDownloadOnly != null && isDownloadOnly) {
+    %>
+    
+    <div>
+        <h3>
+            <span class="label label-warning">
+                Search result is too large, please click the blue 'Download' button above to download it.
+            </span>  
+        </h3> 
+    </div>
     <%
         }
-        if (variantGeneScoreList != null) {
+        if (variantGeneScoreList != null && !variantGeneScoreList.isEmpty()) {
     %>
+     
     <table class="table table-striped">
         <thead>
             <tr>

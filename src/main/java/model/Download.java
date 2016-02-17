@@ -13,6 +13,7 @@ public class Download {
 
     public static String rootPath;
     public static String url;
+    public static boolean isDownloadOnly;
 
     public static void init() throws Exception {
         url = "";
@@ -58,6 +59,15 @@ public class Download {
             }
 
             url = "./downloads/" + folder.getName() + "/" + fileName;
+        }
+    }
+    
+    public static void isDownloadOnly(){
+        if (Output.variantGeneScoreList.size() <= 5000) {
+            isDownloadOnly= false;
+        }else{
+            isDownloadOnly = true;
+            Output.variantGeneScoreList.clear(); // free memory
         }
     }
 }
