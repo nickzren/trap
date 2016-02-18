@@ -22,9 +22,16 @@
             <div class="container-main">
                 <h3 class="page-header">About</h3>
 
+                <p class="lead">
+                    <mark>Variant Damaging Score Data Browser is ...</mark>
+                </p>
+                
+                <br/>
+                
+                <h4><i class="fa fa-database"></i> Data Generation</h4>
                 <p>
-                    <mark>......</mark>
-                </p>             
+                    <mark>...</mark>
+                </p>
             </div>
         </div>
 

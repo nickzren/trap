@@ -36,13 +36,6 @@
                 <p>                    
                     <mark>paper citation here ...</mark>
                 </p>
-
-                <br/>
-
-                <h4><i class="fa fa-database"></i> Data Generation</h4>
-                <p>
-                    ...
-                </p>
             </div>
 
         </div>
