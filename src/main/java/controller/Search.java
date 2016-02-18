@@ -31,10 +31,8 @@ public class Search extends HttpServlet {
                 Input.init(request);
 
                 Output.init();
-                
-                Download.generateFile();
-                
-                Download.isDownloadOnly();
+
+                Download.init();
             }
 
             setRequest(request);
@@ -48,7 +46,7 @@ public class Search extends HttpServlet {
     private void setRequest(HttpServletRequest request) {
         request.setAttribute("query", Input.query);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
-        request.setAttribute("errorMsg", Output.errorMsg);
+        request.setAttribute("isRegionValid", Output.isRegionValid);
         request.setAttribute("url", Download.url);
         request.setAttribute("isDownloadOnly", Download.isDownloadOnly);
     }

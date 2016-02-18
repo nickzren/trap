@@ -13,13 +13,11 @@ import object.EnsgGene;
 public class Output {
 
     public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
-    public static String errorMsg;
+    public static boolean isRegionValid; // only check for out of bound , max 100kb
 
     public static void init() throws Exception {
         variantGeneScoreList.clear();
-        errorMsg = "";
-
-        Download.init();
+        isRegionValid = true;
 
         if (Input.query.split("-").length == 4) {
             initVariantListByVariantId(Input.query);
@@ -70,28 +68,40 @@ public class Output {
         }
 
         tmp = tmp[1].split("-");
-        String start = tmp[0];
-        String end = tmp[1];
+        int start = Integer.valueOf(tmp[0]);
+        int end = Integer.valueOf(tmp[1]);
+        
+        isRegionValid = isRegionValid(start, end);
 
-        String sql = "SELECT * "
-                + "FROM snv_score_chr" + chr + " "
-                + "WHERE pos BETWEEN " + start + " AND " + end;
+        if (isRegionValid) {
+            String sql = "SELECT * "
+                    + "FROM snv_score_chr" + chr + " "
+                    + "WHERE pos BETWEEN " + start + " AND " + end;
 
-        ResultSet rset = DBManager.executeQuery(sql);
+            ResultSet rset = DBManager.executeQuery(sql);
 
-        while (rset.next()) {
-            VariantGeneScore variantGeneScore
-                    = new VariantGeneScore(chr,
-                            rset.getInt("pos"),
-                            rset.getString("ref"),
-                            rset.getString("alt"),
-                            rset.getString("ensg_gene"),
-                            rset.getFloat("score"));
+            while (rset.next()) {
+                VariantGeneScore variantGeneScore
+                        = new VariantGeneScore(chr,
+                                rset.getInt("pos"),
+                                rset.getString("ref"),
+                                rset.getString("alt"),
+                                rset.getString("ensg_gene"),
+                                rset.getFloat("score"));
 
-            variantGeneScoreList.add(variantGeneScore);
+                variantGeneScoreList.add(variantGeneScore);
+            }
+
+            rset.close();
+        }
+    }
+
+    private static boolean isRegionValid(int start, int end) {
+        if (end - start > 100000) {
+            return false;
         }
 
-        rset.close();
+        return true;
     }
 
     public static void initVariantListByGene(String gene) throws Exception {

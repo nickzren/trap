@@ -17,9 +17,14 @@ public class Download {
 
     public static void init() throws Exception {
         url = "";
+        isDownloadOnly = false;
+        
+        generateFile();
+        
+        isDownloadOnly();
     }
 
-    public static void generateFile() throws Exception {
+    private static void generateFile() throws Exception {
         if (!Output.variantGeneScoreList.isEmpty()) { // TRUE - no results from search query
             String folderPath = rootPath + File.separator;
 
@@ -62,7 +67,7 @@ public class Download {
         }
     }
     
-    public static void isDownloadOnly(){
+    private static void isDownloadOnly(){
         if (Output.variantGeneScoreList.size() <= 5000) {
             isDownloadOnly= false;
         }else{

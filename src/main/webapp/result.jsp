@@ -5,6 +5,7 @@
 <div>
     <%
         String query = (String) request.getAttribute("query");
+        Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
         String url = (String) request.getAttribute("url");
         Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
         ArrayList<VariantGeneScore> variantGeneScoreList
@@ -22,7 +23,7 @@
         <div class="col-md-2" >
             <a style="float: right" href="<%=url%>" >
                 <button type="button" class="btn btn-primary" 
-                        <%if (url.isEmpty()){%>disabled<%}%>>
+                        <%if (url.isEmpty()) {%>disabled<%}%>>
                     <i class="fa fa-download">
                         Download
                     </i>
@@ -34,29 +35,32 @@
     <br/>
 
     <%
-        if (isDownloadOnly) {
+        if (!isRegionValid) {
     %>
-
+    <div class="alert alert-warning" style="width:50%">
+        <h4>
+            Your region is too large. Please search a region at most 100 kb.
+        </h4>
+    </div>
+    <%
+    } else if (isDownloadOnly) {
+    %>
     <div class="alert alert-warning" style="width:70%">
         <h4>
             Search result is too large, please click the blue 'Download' button above to download it.
         </h4>
     </div>
-
     <%
     } else if (variantGeneScoreList.isEmpty()) {
     %>
-
     <div class="alert alert-warning" style="width:30%">
         <h4>
             No results found from search query.
         </h4>
     </div>
-
     <%
     } else {
     %>   
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -86,6 +90,6 @@
         </tbody>
     </table>
     <%
-                }
+            }
         }
     %>
