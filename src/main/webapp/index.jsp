@@ -50,7 +50,7 @@
                         </div>
 
                         <div style="top:6px" class="col-md-2">
-                            <form action="FileUploadHandler" method="post" enctype="multipart/form-data">
+                            <form action="Search" method="post" enctype="multipart/form-data">
                                 <button type="button" class="btn btn-primary" onclick="this.form.input_file.click()">
                                     <i class="fa fa-upload"></i>
                                     Search variants

@@ -55,7 +55,7 @@ public class DBManager {
             statement = connection.createStatement();
         }
 
-        if (connection.isClosed()) {
+        if (connection == null || connection.isClosed()) {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
         } else if (statement.isClosed()) {
@@ -66,18 +66,18 @@ public class DBManager {
     private static void initDataFromSystemConfig() {
         try {
             // server config
-//            InputStream input = new FileInputStream(Data.SYSTEM_CONFIG);
-//            Properties prop = new Properties();
-//            prop.load(input);
+            InputStream input = new FileInputStream(Data.SYSTEM_CONFIG);
+            Properties prop = new Properties();
+            prop.load(input);
 
-//            dbUrl = prop.getProperty("dburl");
-//            dbUser = prop.getProperty("dbuser");
-//            dbPassword = prop.getProperty("dbpassword");
+            dbUrl = prop.getProperty("dburl");
+            dbUser = prop.getProperty("dbuser");
+            dbPassword = prop.getProperty("dbpassword");
             
             // local config
-             dbUrl = "jdbc:mysql://localhost:3306/vdsdb";
-             dbUser = "test";
-             dbPassword = "test";
+//             dbUrl = "jdbc:mysql://localhost:3306/vdsdb";
+//             dbUser = "test";
+//             dbPassword = "test";
         } catch (Exception e) {
             e.printStackTrace();
         }

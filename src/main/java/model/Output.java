@@ -1,5 +1,10 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import object.VariantGeneScore;
 import util.DBManager;
 import java.sql.ResultSet;
@@ -19,13 +24,41 @@ public class Output {
         variantGeneScoreList.clear();
         isRegionValid = true;
 
-        if (Input.query.split("-").length == 4) {
-            initVariantListByVariantId(Input.query);
-        } else if (Input.query.contains(":")) {
-            initVariantListByRegion(Input.query);
-        } else {
-            initVariantListByGene(Input.query);
+        if (Upload.isUpload) {
+            initVariantListByVariantFile();
+        } else { 
+            if (Input.query.split("-").length == 4) {
+                initVariantListByVariantId(Input.query);
+            } else if (Input.query.contains(":")) {
+                initVariantListByRegion(Input.query);
+            } else {
+                initVariantListByGene(Input.query);
+            }
         }
+    }
+
+    private static void initVariantListByVariantFile() throws Exception {
+        File f = new File(Upload.filePath);
+        FileInputStream fstream = new FileInputStream(f);
+        DataInputStream in = new DataInputStream(fstream);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+        String lineStr = "";
+        while ((lineStr = br.readLine()) != null) {
+            if (!lineStr.isEmpty()) {
+                lineStr = lineStr.replaceAll("( )+", "");
+
+                if (lineStr.split("-").length == 4) {
+                    initVariantListByVariantId(lineStr);
+                }
+            }
+        }
+
+        br.close();
+        in.close();
+        fstream.close();
+
+        f.delete();
     }
 
     public static void initVariantListByVariantId(String id) throws Exception {
@@ -70,7 +103,7 @@ public class Output {
         tmp = tmp[1].split("-");
         int start = Integer.valueOf(tmp[0]);
         int end = Integer.valueOf(tmp[1]);
-        
+
         isRegionValid = isRegionValid(start, end);
 
         if (isRegionValid) {

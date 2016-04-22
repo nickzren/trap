@@ -22,7 +22,7 @@
 
         <div class="col-md-2" >
             <a style="float: right" href="<%=url%>" >
-                <button type="button" class="btn btn-primary" 
+                <button type="button" class="btn btn-default" 
                         <%if (url.isEmpty()) {%>disabled<%}%>>
                     <i class="fa fa-download">
                         Download

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Download;
 import model.Input;
 import model.Output;
+import model.Upload;
 import util.DBManager;
 
 /**
@@ -24,9 +25,12 @@ public class Search extends HttpServlet {
 
                 if (Download.rootPath == null) {
                     Download.rootPath = getServletContext().getRealPath("/downloads/");
+                    Upload.rootPath = getServletContext().getRealPath("/uploads/");
                 }
 
                 DBManager.init();
+
+                Upload.init(request);
 
                 Input.init(request);
 
