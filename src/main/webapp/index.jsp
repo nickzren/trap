@@ -28,7 +28,7 @@
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
                     <h2>Data Browser 
                         <small>
-                            <a href="download.jsp">
+                            <a class="white" href="download.jsp">
                                 <span class="label label-default">v1</span>
                             </a>
                         </small>
@@ -46,6 +46,18 @@
                                             <i class="glyphicon glyphicon-search"></i></button>
                                     </div>
                                 </div>
+                            </form>
+                        </div>
+
+                        <div style="top:6px" class="col-md-2">
+                            <form action="FileUploadHandler" method="post" enctype="multipart/form-data">
+                                <button type="button" class="btn btn-primary" onclick="this.form.input_file.click()">
+                                    <i class="fa fa-upload"></i>
+                                    Search variants
+                                </button>
+                                
+                                <input id="input_file" type="file" name="input_file" style="visibility:hidden;" 
+                                       onchange="this.form.submit()">
                             </form>
                         </div>
                     </div>
