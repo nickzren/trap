@@ -49,6 +49,7 @@ public class Search extends HttpServlet {
 
     private void setRequest(HttpServletRequest request) {
         request.setAttribute("query", Input.query);
+        request.setAttribute("uploadErrMsg", Upload.uploadErrMsg);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);
         request.setAttribute("url", Download.url);
@@ -71,5 +72,4 @@ public class Search extends HttpServlet {
     public String getServletInfo() {
         return "vdsdb search query";
     }
-
 }

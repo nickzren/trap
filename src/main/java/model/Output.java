@@ -26,7 +26,7 @@ public class Output {
 
         if (Upload.isUpload) {
             initVariantListByVariantFile();
-        } else { 
+        } else {
             if (Input.query.split("-").length == 4) {
                 initVariantListByVariantId(Input.query);
             } else if (Input.query.contains(":")) {
@@ -38,6 +38,10 @@ public class Output {
     }
 
     private static void initVariantListByVariantFile() throws Exception {
+        if (Upload.uploadErrMsg != null) {
+            return;
+        }
+
         File f = new File(Upload.filePath);
         FileInputStream fstream = new FileInputStream(f);
         DataInputStream in = new DataInputStream(fstream);
@@ -48,8 +52,13 @@ public class Output {
             if (!lineStr.isEmpty()) {
                 lineStr = lineStr.replaceAll("( )+", "");
 
-                if (lineStr.split("-").length == 4) {
+                if (lineStr.contains("-")
+                        && lineStr.split("-").length == 4) {
                     initVariantListByVariantId(lineStr);
+                } else {
+                    Upload.uploadErrMsg = "Wrong input values in your variant file: " + lineStr;
+                    f.delete();
+                    return;
                 }
             }
         }

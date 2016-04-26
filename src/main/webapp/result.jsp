@@ -5,6 +5,7 @@
 <div>
     <%
         String query = (String) request.getAttribute("query");
+        String uploadErrMsg = (String) request.getAttribute("uploadErrMsg");
         Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
         String url = (String) request.getAttribute("url");
         Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
@@ -21,21 +22,29 @@
         </div>
 
         <div class="col-md-2" >
-            <a style="float: right" href="<%=url%>" >
-                <button type="button" class="btn btn-default" 
-                        <%if (url.isEmpty()) {%>disabled<%}%>>
-                    <i class="fa fa-download">
-                        Download
-                    </i>
-                </button>
-            </a>
+            <button style="float: right" type="button"
+                    onclick="location.href = '<%=url%>';"
+                    class="btn btn-default" 
+                    <%if (url.isEmpty()) {%>disabled<%}%>>
+                <i class="fa fa-download">
+                    Download
+                </i>
+            </button>
         </div>
     </div>
 
     <br/>
 
     <%
-        if (!isRegionValid) {
+        if (uploadErrMsg != null) {
+    %>
+    <div class="alert alert-warning" style="width:50%">
+        <h4>
+            <%=uploadErrMsg%>
+        </h4>
+    </div>
+    <%
+    } else if (!isRegionValid) {
     %>
     <div class="alert alert-warning" style="width:50%">
         <h4>
@@ -47,7 +56,7 @@
     %>
     <div class="alert alert-warning" style="width:70%">
         <h4>
-            Search result is too large, please click the blue 'Download' button above to download it.
+            Please click the 'Download' button above to download your results.
         </h4>
     </div>
     <%

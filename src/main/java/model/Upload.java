@@ -16,6 +16,8 @@ public class Upload {
     public static String rootPath;
     public static boolean isUpload; // search variants feature
     public static String filePath;
+    public static String fileName;
+    public static String uploadErrMsg;
 
     public static void init(HttpServletRequest request) throws Exception {
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -27,35 +29,46 @@ public class Upload {
 
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        String name = new File(item.getName()).getName();
+                        fileName = new File(item.getName()).getName();
 
-                        int index = name.lastIndexOf("."); // file extension index
+                        int index = fileName.lastIndexOf("."); // file extension index
 
                         if (!item.getContentType().equals("text/plain")) {
-                            request.setAttribute("uploadMsg",
-                                    "Variant file only support text/plain file format");
+                            uploadErrMsg = "Variant file only support text/plain file format.";
                             return;
                         }
 
-                        name = name.substring(0, index)
+                        fileName = fileName.substring(0, index)
+                                + "_"
                                 + System.currentTimeMillis()
-                                + name.substring(index);
+                                + fileName.substring(index);
 
-                        File file = new File(rootPath + File.separator + name);
+                        File file = new File(rootPath + File.separator + fileName);
 
                         filePath = file.getAbsolutePath();
 
                         item.write(file);
+
+                        checkFileSize(file);
                     }
                 }
-
-                //File uploaded successfully
-                request.setAttribute("uploadMsg", "File Uploaded Successfully");
             } catch (Exception ex) {
-                request.setAttribute("uploadMsg", "File Upload Failed due to " + ex);
+                uploadErrMsg = "File Upload Failed due to " + ex;
             }
         } else {
+            uploadErrMsg = null;
             isUpload = false;
+            fileName = "";
+            filePath = "";
+        }
+    }
+
+    // The maximum accepted file size is set at 200KB
+    private static void checkFileSize(File file) {
+        if (file.length() > 204800) {
+            uploadErrMsg = "The maximum accepted file size is set at 200KB";
+
+            file.delete();
         }
     }
 }
