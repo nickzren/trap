@@ -63,10 +63,10 @@ public class Upload {
         }
     }
 
-    // The maximum accepted file size is set at 200KB
+    // The maximum accepted file size is set at 1MB
     private static void checkFileSize(File file) {
-        if (file.length() > 204800) {
-            uploadErrMsg = "The maximum accepted file size is set at 200KB";
+        if (file.length() > 1048576) {
+            uploadErrMsg = "The maximum accepted file size is set at 1MB";
 
             file.delete();
         }

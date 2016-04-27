@@ -54,7 +54,7 @@
                                 <button type="button" class="btn btn-primary" 
                                         onclick="this.form.input_file.click()"
                                         data-toggle="tooltip" 
-                                        title="Upload your variants file (maximum 200KB), single variant per line (chr-pos-ref-alt)">
+                                        title="Upload your variants text/plain file, single variant per line (chr-pos-ref-alt)">
                                     <i class="fa fa-upload"></i>
                                     Search variants
                                 </button>
