@@ -18,9 +18,9 @@ public class Download {
     public static void init() throws Exception {
         url = "";
         isDownloadOnly = false;
-        
+
         generateFile();
-        
+
         isDownloadOnly();
     }
 
@@ -28,7 +28,9 @@ public class Download {
         if (!Output.variantGeneScoreList.isEmpty()) { // TRUE - no results from search query
             String folderPath = rootPath + File.separator;
 
-            if (Input.query.split("-").length == 4) {
+            if (Upload.isUpload) {
+                folderPath += "variants";
+            } else if (Input.query.split("-").length == 4) {
                 folderPath += "variant";
             } else if (Input.query.contains(":")) {
                 folderPath += "region";
@@ -66,11 +68,11 @@ public class Download {
             url = "./downloads/" + folder.getName() + "/" + fileName;
         }
     }
-    
-    private static void isDownloadOnly(){
+
+    private static void isDownloadOnly() {
         if (Output.variantGeneScoreList.size() <= 5000) {
-            isDownloadOnly= false;
-        }else{
+            isDownloadOnly = false;
+        } else {
             isDownloadOnly = true;
             Output.variantGeneScoreList.clear(); // free memory
         }
