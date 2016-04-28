@@ -20,6 +20,8 @@ public class Upload {
     public static String uploadErrMsg;
 
     public static void init(HttpServletRequest request) throws Exception {
+        reset();
+
         if (ServletFileUpload.isMultipartContent(request)) {
             isUpload = true;
 
@@ -55,11 +57,6 @@ public class Upload {
             } catch (Exception ex) {
                 uploadErrMsg = "File Upload Failed due to " + ex;
             }
-        } else {
-            uploadErrMsg = null;
-            isUpload = false;
-            fileName = "";
-            filePath = "";
         }
     }
 
@@ -70,5 +67,12 @@ public class Upload {
 
             file.delete();
         }
+    }
+
+    private static void reset() {
+        uploadErrMsg = null;
+        isUpload = false;
+        fileName = "";
+        filePath = "";
     }
 }
