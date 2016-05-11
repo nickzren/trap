@@ -1,5 +1,5 @@
 <head>
-    <title>Genic Intolerance</title>
+    <title>Trap Score</title>
     <meta charset="UTF-8">
     <meta name="description" content="Transcript inferred Pathogenicity Score (trap-score)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,4 @@
     <script src="js/bootstrap.min.js"></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
-    <link rel="canonical" href="http://chgv.org/GenicIntolerance/">
 </head>
