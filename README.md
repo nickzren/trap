@@ -1,1 +1,1 @@
-# vdsdb
+# Transcript inferred Pathogenicity score data browser

@@ -4,7 +4,7 @@
             <div class="navbar-header">
                 <a class="brand-link" href="index.jsp">
                     <img class="navbar-brand brand-img" src="img/cumc-logo.png"/>
-                    <div class="navbar-brand">Variant Damaging Score Data Browser (VDSdb)</div>
+                    <div class="navbar-brand">Transcript inferred Pathogenicity Score</div>
                 </a>
             </div>
 

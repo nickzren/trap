@@ -70,6 +70,6 @@ public class Search extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "vdsdb search query";
+        return "trap search query";
     }
 }

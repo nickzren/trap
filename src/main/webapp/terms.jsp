@@ -32,7 +32,7 @@
                 <br/>
 
                 <h4><i class="fa fa-star"></i> Citation</h4>                
-                <p>VDSdb, New York City, New York (URL: http://vdsdb.org) [date (month, year) accessed].</p>
+                <p>Trap-score, New York City, New York (URL: http://trap-score.org) [date (month, year) accessed].</p>
                 <p>                    
                     <mark>paper citation here ...</mark>
                 </p>
