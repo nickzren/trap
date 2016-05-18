@@ -12,7 +12,7 @@
                 <h3 class="page-header">About</h3>
 
                 <p class="lead">
-                    <mark>Variant Damaging Score Data Browser is ...</mark>
+                    <mark>TraP Data Browser is ...</mark>
                 </p>
                 
                 <br/>

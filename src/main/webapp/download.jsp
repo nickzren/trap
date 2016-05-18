@@ -27,7 +27,7 @@
                 <p>
                     <a href="">
                         <i class="fa fa-file"></i>
-                        variant_damaging_score_v1.gz
+                        trap_score_v1.gz
                     </a> 
                     (variant file in <mark>???</mark> format)
                 </p>
