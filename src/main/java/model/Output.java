@@ -17,7 +17,7 @@ import object.EnsgGene;
  */
 public class Output {
 
-    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
+    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
     public static boolean isRegionValid; // only check for out of bound , max 100kb
 
     public static void init() throws Exception {
@@ -27,11 +27,13 @@ public class Output {
         if (Upload.isUpload) {
             initVariantListByVariantFile();
         } else {
-            if (Input.query.split("-").length == 4) {
+            if (Input.query.split("-").length == 4) { // search by variant id
                 initVariantListByVariantId(Input.query);
-            } else if (Input.query.contains(":")) {
+            } else if (Input.query.contains(":")) { // search by region
                 initVariantListByRegion(Input.query);
-            } else {
+            } else if (Input.query.split("-").length == 2) { // search by variant site
+                initVariantListByVariantSite(Input.query);
+            } else { // search by gene
                 initVariantListByGene(Input.query);
             }
         }
@@ -52,9 +54,12 @@ public class Output {
             if (!lineStr.isEmpty()) {
                 lineStr = lineStr.replaceAll("( )+", "");
 
-                if (lineStr.contains("-")
-                        && lineStr.split("-").length == 4) {
-                    initVariantListByVariantId(lineStr);
+                if (lineStr.contains("-")) {
+                    if (lineStr.split("-").length == 2) {
+                        initVariantListByVariantSite(lineStr);
+                    } else if (lineStr.split("-").length == 4) {
+                        initVariantListByVariantId(lineStr);
+                    }
                 } else {
                     Upload.uploadErrMsg = "Wrong input values in your variant file: " + lineStr;
                     f.delete();
@@ -68,6 +73,33 @@ public class Output {
         fstream.close();
 
         f.delete();
+    }
+
+    public static void initVariantListByVariantSite(String site) throws Exception {
+        String[] tmp = site.split("-"); // chr-pos
+
+        String chr = tmp[0];
+        int pos = Integer.valueOf(tmp[1]);
+
+        String sql = "SELECT * "
+                + "FROM snv_score_chr" + chr + " "
+                + "WHERE pos = " + pos;
+
+        ResultSet rset = DBManager.executeQuery(sql);
+
+        while (rset.next()) {
+            VariantGeneScore variantGeneScore = new VariantGeneScore(
+                    chr,
+                    pos,
+                    rset.getString("ref"),
+                    rset.getString("alt"),
+                    rset.getString("ensg_gene"),
+                    rset.getFloat("score"));
+
+            variantGeneScoreList.add(variantGeneScore);
+        }
+
+        rset.close();
     }
 
     public static void initVariantListByVariantId(String id) throws Exception {
