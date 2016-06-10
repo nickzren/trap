@@ -54,9 +54,9 @@
     <%
     } else if (isDownloadOnly) {
     %>
-    <div class="alert alert-warning" style="width:70%">
+    <div class="alert alert-warning" style="width:80%">
         <h4>
-            Please click the 'Download' button above to download your results.
+            The search result is too large to display. Please click the 'Download' button to download your results.
         </h4>
     </div>
     <%

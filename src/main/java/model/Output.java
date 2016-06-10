@@ -19,7 +19,9 @@ public class Output {
 
     public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
     public static boolean isRegionValid; // only check for out of bound , max 100kb
-
+    public static final int maxVariantNumToDisplay = 5000;
+    public static final int maxBaseNumToDisplay = 10000;
+    
     public static void init() throws Exception {
         variantGeneScoreList.clear();
         isRegionValid = true;
@@ -179,7 +181,7 @@ public class Output {
     }
 
     private static boolean isRegionValid(int start, int end) {
-        return end - start <= 100000;
+        return end - start <= maxBaseNumToDisplay;
     }
 
     public static void initVariantListByEnsgGene(String ensg) throws Exception {
