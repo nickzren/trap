@@ -81,9 +81,10 @@ public class Output {
         String chr = tmp[0];
         int pos = Integer.valueOf(tmp[1]);
 
-        String sql = "SELECT * "
-                + "FROM snv_score_chr" + chr + " "
-                + "WHERE pos = " + pos;
+        String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
+                + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                + "WHERE v.pos = " + pos + " "
+                + "AND v.ensg_gene = g.ensg_gene";
 
         ResultSet rset = DBManager.executeQuery(sql);
 
@@ -94,6 +95,7 @@ public class Output {
                     rset.getString("ref"),
                     rset.getString("alt"),
                     rset.getString("ensg_gene"),
+                    rset.getString("hgnc_gene"),
                     rset.getFloat("score"));
 
             variantGeneScoreList.add(variantGeneScore);
@@ -110,10 +112,11 @@ public class Output {
         String ref = tmp[2];
         String alt = tmp[3];
 
-        String sql = "SELECT * "
-                + "FROM snv_score_chr" + chr + " "
-                + "WHERE pos = " + pos + " "
-                + "AND alt='" + alt + "'";
+        String sql = "SELECT v.ensg_gene,g.hgnc_gene,v.score "
+                + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                + "WHERE v.pos = " + pos + " "
+                + "AND v.alt='" + alt + "' "
+                + "AND v.ensg_gene = g.ensg_gene";
 
         ResultSet rset = DBManager.executeQuery(sql);
 
@@ -124,6 +127,7 @@ public class Output {
                     ref,
                     alt,
                     rset.getString("ensg_gene"),
+                    rset.getString("hgnc_gene"),
                     rset.getFloat("score"));
 
             variantGeneScoreList.add(variantGeneScore);
@@ -148,9 +152,10 @@ public class Output {
         isRegionValid = isRegionValid(start, end);
 
         if (isRegionValid) {
-            String sql = "SELECT * "
-                    + "FROM snv_score_chr" + chr + " "
-                    + "WHERE pos BETWEEN " + start + " AND " + end;
+            String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
+                    + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                    + "WHERE v.pos BETWEEN " + start + " AND " + end + " "
+                    + "AND v.ensg_gene = g.ensg_gene";
 
             ResultSet rset = DBManager.executeQuery(sql);
 
@@ -161,6 +166,7 @@ public class Output {
                                 rset.getString("ref"),
                                 rset.getString("alt"),
                                 rset.getString("ensg_gene"),
+                                rset.getString("hgnc_gene"),
                                 rset.getFloat("score"));
 
                 variantGeneScoreList.add(variantGeneScore);
@@ -171,11 +177,7 @@ public class Output {
     }
 
     private static boolean isRegionValid(int start, int end) {
-        if (end - start > 100000) {
-            return false;
-        }
-
-        return true;
+        return end - start <= 100000;
     }
 
     public static void initVariantListByGene(String gene) throws Exception {
@@ -185,10 +187,11 @@ public class Output {
             return;
         }
 
-        String sql = "SELECT * "
-                + "FROM snv_score_chr" + ensgGene.getChr() + " "
-                + "WHERE pos BETWEEN " + ensgGene.getStart() + " AND " + ensgGene.getEnd() + " "
-                + "AND ensg_gene ='" + ensgGene.getName() + "'";
+        String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
+                + "FROM snv_score_chr" + ensgGene.getChr() + " v , ensg_hgnc_gene g "
+                + "WHERE v.pos BETWEEN " + ensgGene.getStart() + " AND " + ensgGene.getEnd() + " "
+                + "AND v.ensg_gene ='" + ensgGene.getName() + "' "
+                + "AND v.ensg_gene = g.ensg_gene";
 
         ResultSet rset = DBManager.executeQuery(sql);
 
@@ -200,6 +203,7 @@ public class Output {
                             rset.getString("ref"),
                             rset.getString("alt"),
                             rset.getString("ensg_gene"),
+                            rset.getString("hgnc_gene"),
                             rset.getFloat("score"));
 
             variantGeneScoreList.add(variantGeneScore);

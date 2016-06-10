@@ -73,11 +73,13 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th class="text-center">Variant ID</th>
                 <th class="text-center">Chr</th>
                 <th class="text-center">Pos</th>
                 <th class="text-center">Ref</th>
                 <th class="text-center">Alt</th>
                 <th class="text-center">ENSG Gene</th>
+                <th class="text-center">HGNC Gene</th>
                 <th class="text-center">Score</th>
             </tr> 
         </thead>
@@ -85,12 +87,14 @@
             <%
                 for (VariantGeneScore variant : variantGeneScoreList) {
             %>
-            <tr class="text-center">    
+            <tr class="text-center">
+                <td><%=variant.getVariantId()%></td>
                 <td><%=variant.getChr()%></td>
                 <td><%=variant.getPos()%></td>
                 <td><%=variant.getRef()%></td>
                 <td><%=variant.getAlt()%></td>
                 <td><%=variant.getEnsgGene()%></td>
+                <td><%=variant.getHgncGene()%></td>
                 <td><%=variant.getScore()%></td>
             </tr>
             <%
