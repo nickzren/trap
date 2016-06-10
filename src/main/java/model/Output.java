@@ -33,8 +33,10 @@ public class Output {
                 initVariantListByRegion(Input.query);
             } else if (Input.query.split("-").length == 2) { // search by variant site
                 initVariantListByVariantSite(Input.query);
-            } else { // search by gene
-                initVariantListByGene(Input.query);
+            } else if (Input.query.startsWith("ENSG")) { // search by ENSG gene
+                initVariantListByEnsgGene(Input.query);
+            } else { // search by HGNC gene or return nothing found
+                initVariantListByHgncGene(Input.query);
             }
         }
     }
@@ -180,8 +182,8 @@ public class Output {
         return end - start <= 100000;
     }
 
-    public static void initVariantListByGene(String gene) throws Exception {
-        EnsgGene ensgGene = getEnsgGene(gene);
+    public static void initVariantListByEnsgGene(String ensg) throws Exception {
+        EnsgGene ensgGene = getEnsgGene(ensg);
 
         if (ensgGene == null) { // not a valid ensg gene
             return;
@@ -212,10 +214,10 @@ public class Output {
         rset.close();
     }
 
-    private static EnsgGene getEnsgGene(String gene) throws Exception {
+    private static EnsgGene getEnsgGene(String ensg) throws Exception {
         String sql = "SELECT * "
                 + "FROM ensg_gene_region "
-                + "WHERE ensg_gene = '" + gene + "'";
+                + "WHERE ensg_gene = '" + ensg + "'";
 
         ResultSet rset = DBManager.executeQuery(sql);
 
@@ -223,7 +225,7 @@ public class Output {
 
         if (rset.next()) {
             ensgGene = new EnsgGene(
-                    gene,
+                    ensg,
                     rset.getString("chr"),
                     rset.getInt("start"),
                     rset.getInt("end"));
@@ -232,5 +234,27 @@ public class Output {
         rset.close();
 
         return ensgGene;
+    }
+
+    public static void initVariantListByHgncGene(String hgnc) throws Exception {
+        String ensg = getEnsgGeneNameByHgnc(hgnc);
+
+        initVariantListByEnsgGene(ensg);
+    }
+
+    private static String getEnsgGeneNameByHgnc(String hgnc) throws Exception {
+        String sql = "SELECT ensg_gene "
+                + "FROM ensg_hgnc_gene "
+                + "WHERE hgnc_gene = '" + hgnc + "'";
+
+        ResultSet rset = DBManager.executeQuery(sql);
+
+        if (rset.next()) {
+            return rset.getString("ensg_gene");
+        }
+
+        rset.close();
+
+        return "NA";
     }
 }

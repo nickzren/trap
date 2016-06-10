@@ -52,7 +52,8 @@
                     </div>
 
                     <p class="text-muted" style="margin-left: 5px">
-                        ENSG Gene: <a href="Search?query=ENSG00000186092">ENSG00000186092</a>,
+                        ENSG: <a href="Search?query=ENSG00000186092">ENSG00000186092</a>,
+                        HGNC: <a href="Search?query=TBK1">TBK1</a>,
                         Region: <a href="Search?query=1:7905143-7905156">1:7905143-7905156</a>, 
                         Variant: <a href="Search?query=1-7905043-C-T">1-7905043-C-T</a> / 
                         <a href="Search?query=1-7905043">1-7905043</a>
