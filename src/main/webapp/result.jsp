@@ -88,25 +88,13 @@
                 for (VariantGeneScore variant : variantGeneScoreList) {
             %>
             <tr class="text-center">
-                <td>
-                    <a href="Search?query=<%=variant.getVariantId()%>">
-                        <%=variant.getVariantId()%>
-                    </a>
-                </td>
+                <td><%=variant.getVariantId()%></td>
                 <td><%=variant.getChr()%></td>
                 <td><%=variant.getPos()%></td>
                 <td><%=variant.getRef()%></td>
                 <td><%=variant.getAlt()%></td>
-                <td>
-                    <a href="Search?query=<%=variant.getEnsgGene()%>">
-                        <%=variant.getEnsgGene()%>
-                    </a>
-                </td>
-                <td>
-                    <a href="Search?query=<%=variant.getHgncGene()%>">
-                        <%=variant.getHgncGene()%>
-                    </a>
-                </td>
+                <td><%=variant.getEnsgGene()%></td>
+                <td><%=variant.getHgncGene()%></td>
                 <td><%=variant.getScore()%></td>
             </tr>
             <%

@@ -13,7 +13,6 @@
 
                 <h4><i class="fa fa-gavel"></i> Terms of use</h4>
                 <p>
-                    <mark>This website is intended to ...</mark>
                     The data derived from this website may not be used for any commercial purpose. The data from this 
                     website may not be replicated on any other website without written consent.
                 </p>
@@ -22,9 +21,9 @@
 
                 <h4><i class="fa fa-star"></i> Citation</h4>                
                 <p>TraP, New York City, New York (URL: http://trap-score.org) [date (month, year) accessed].</p>
-                <p>                    
+<!--                <p>                    
                     <mark>paper citation here ...</mark>
-                </p>
+                </p>-->
             </div>
 
         </div>
