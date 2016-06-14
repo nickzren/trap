@@ -43,6 +43,7 @@ public class Search extends HttpServlet {
 
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
+//            request.setAttribute("errorMsg4Debug", ex.toString());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }

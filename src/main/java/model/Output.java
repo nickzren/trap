@@ -82,7 +82,7 @@ public class Output {
     public static void initVariantListByVariantSite(String site) throws Exception {
         String[] tmp = site.split("-"); // chr-pos
 
-        String chr = tmp[0];
+        String chr = tmp[0].replace("XY", "X");
         int pos = Integer.valueOf(tmp[1]);
 
         String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
@@ -111,7 +111,7 @@ public class Output {
     public static void initVariantListByVariantId(String id) throws Exception {
         String[] tmp = id.split("-"); // chr-pos-ref-alt
 
-        String chr = tmp[0];
+        String chr = tmp[0].replace("XY", "X");
         int pos = Integer.valueOf(tmp[1]);
         String ref = tmp[2];
         String alt = tmp[3];

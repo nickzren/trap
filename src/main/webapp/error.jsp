@@ -6,7 +6,7 @@
         <title>Error</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,6 +17,10 @@
         <div class="container">
 
             <%@include file="base/header.jsp" %>
+
+            <%
+                String errorMsg4Debug = (String) request.getAttribute("errorMsg4Debug");
+            %>
 
             <div class="row">
                 <div class="col-md-12">
@@ -30,6 +34,15 @@
                         <p>
                             Sorry, an error has occured, Requested page not found!
                         </p>
+
+                        <%
+                            if (errorMsg4Debug != null) {
+                        %>
+                        <p><%=errorMsg4Debug%></p>
+                        <%
+                            }
+                        %>
+
                     </div>
                 </div>
             </div>
