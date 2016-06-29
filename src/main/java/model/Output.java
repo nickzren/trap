@@ -9,6 +9,7 @@ import object.VariantGeneScore;
 import util.DBManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 import object.EnsgGene;
 
 /**
@@ -21,25 +22,23 @@ public class Output {
     public static boolean isRegionValid; // only check for out of bound , max 100kb
     public static final int maxVariantNumToDisplay = 5000;
     public static final int maxBaseNumToDisplay = 10000;
-    
+
     public static void init() throws Exception {
         variantGeneScoreList.clear();
         isRegionValid = true;
 
         if (Upload.isUpload) {
             initVariantListByVariantFile();
-        } else {
-            if (Input.query.split("-").length == 4) { // search by variant id
-                initVariantListByVariantId(Input.query);
-            } else if (Input.query.contains(":")) { // search by region
-                initVariantListByRegion(Input.query);
-            } else if (Input.query.split("-").length == 2) { // search by variant site
-                initVariantListByVariantSite(Input.query);
-            } else if (Input.query.startsWith("ENSG")) { // search by ENSG gene
-                initVariantListByEnsgGene(Input.query);
-            } else { // search by HGNC gene or return nothing found
-                initVariantListByHgncGene(Input.query);
-            }
+        } else if (Input.query.split("-").length == 4) { // search by variant id
+            initVariantListByVariantId(Input.query);
+        } else if (Input.query.contains(":")) { // search by region
+            initVariantListByRegion(Input.query);
+        } else if (Input.query.split("-").length == 2) { // search by variant site
+            initVariantListByVariantSite(Input.query);
+        } else if (Input.query.startsWith("ENSG")) { // search by ENSG gene
+            initVariantListByEnsgGene(Input.query);
+        } else { // search by HGNC gene or return nothing found
+            initVariantListByHgncGene(Input.query);
         }
     }
 
@@ -239,24 +238,28 @@ public class Output {
     }
 
     public static void initVariantListByHgncGene(String hgnc) throws Exception {
-        String ensg = getEnsgGeneNameByHgnc(hgnc);
+        List<String> ensgList = getEnsgGeneNameByHgnc(hgnc);
 
-        initVariantListByEnsgGene(ensg);
+        for (String ensg : ensgList) {
+            initVariantListByEnsgGene(ensg);
+        }
     }
 
-    private static String getEnsgGeneNameByHgnc(String hgnc) throws Exception {
+    private static List<String> getEnsgGeneNameByHgnc(String hgnc) throws Exception {
+        List<String> ensgList = new ArrayList<>();
+
         String sql = "SELECT ensg_gene "
                 + "FROM ensg_hgnc_gene "
                 + "WHERE hgnc_gene = '" + hgnc + "'";
 
         ResultSet rset = DBManager.executeQuery(sql);
 
-        if (rset.next()) {
-            return rset.getString("ensg_gene");
+        while (rset.next()) {
+            ensgList.add(rset.getString("ensg_gene"));
         }
 
         rset.close();
 
-        return "NA";
+        return ensgList;
     }
 }
