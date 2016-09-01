@@ -14,9 +14,7 @@
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
                     <h2>Data Browser 
                         <small>
-                            <a class="white" href="download.jsp">
-                                <span class="label label-default">v1</span>
-                            </a>
+                            <span class="label label-default">v1</span>
                         </small>
                     </h2>
 
