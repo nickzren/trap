@@ -86,4 +86,8 @@ public class DBManager {
     public static ResultSet executeQuery(String sqlQuery) throws SQLException {
         return statement.executeQuery(sqlQuery);
     }
+
+    public static PreparedStatement prepareStatement(String sqlQuery) throws SQLException{
+        return connection.prepareStatement(sqlQuery);
+    }
 }

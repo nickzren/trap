@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.sql.PreparedStatement;
 import object.VariantGeneScore;
 import util.DBManager;
 import java.sql.ResultSet;
@@ -86,10 +87,12 @@ public class Output {
 
         String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
                 + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
-                + "WHERE v.pos = " + pos + " "
+                + "WHERE v.pos = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
 
-        ResultSet rset = DBManager.executeQuery(sql);
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setInt(1, pos);
+        ResultSet rset = stmt.executeQuery();
 
         while (rset.next()) {
             VariantGeneScore variantGeneScore = new VariantGeneScore(
@@ -117,11 +120,14 @@ public class Output {
 
         String sql = "SELECT v.ensg_gene,g.hgnc_gene,v.score "
                 + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
-                + "WHERE v.pos = " + pos + " "
-                + "AND v.alt='" + alt + "' "
+                + "WHERE v.pos = ? "
+                + "AND v.alt=? "
                 + "AND v.ensg_gene = g.ensg_gene";
 
-        ResultSet rset = DBManager.executeQuery(sql);
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setInt(1, pos);
+        stmt.setString(2, alt);
+        ResultSet rset = stmt.executeQuery();
 
         while (rset.next()) {
             VariantGeneScore variantGeneScore = new VariantGeneScore(
@@ -157,10 +163,13 @@ public class Output {
         if (isRegionValid) {
             String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
                     + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
-                    + "WHERE v.pos BETWEEN " + start + " AND " + end + " "
+                    + "WHERE v.pos BETWEEN ? AND ? "
                     + "AND v.ensg_gene = g.ensg_gene";
 
-            ResultSet rset = DBManager.executeQuery(sql);
+            PreparedStatement stmt = DBManager.prepareStatement(sql);
+            stmt.setInt(1, start);
+            stmt.setInt(2, end);
+            ResultSet rset = stmt.executeQuery();
 
             while (rset.next()) {
                 VariantGeneScore variantGeneScore
@@ -192,11 +201,15 @@ public class Output {
 
         String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
                 + "FROM snv_score_chr" + ensgGene.getChr() + " v , ensg_hgnc_gene g "
-                + "WHERE v.pos BETWEEN " + ensgGene.getStart() + " AND " + ensgGene.getEnd() + " "
-                + "AND v.ensg_gene ='" + ensgGene.getName() + "' "
+                + "WHERE v.pos BETWEEN ? AND ? "
+                + "AND v.ensg_gene = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
 
-        ResultSet rset = DBManager.executeQuery(sql);
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setInt(1, ensgGene.getStart());
+        stmt.setInt(2, ensgGene.getEnd());
+        stmt.setString(3, ensgGene.getName());
+        ResultSet rset = stmt.executeQuery();
 
         while (rset.next()) {
             VariantGeneScore variantGeneScore
@@ -216,11 +229,11 @@ public class Output {
     }
 
     private static EnsgGene getEnsgGene(String ensg) throws Exception {
-        String sql = "SELECT * "
-                + "FROM ensg_gene_region "
-                + "WHERE ensg_gene = '" + ensg + "'";
+        String sql = "SELECT * FROM ensg_gene_region WHERE ensg_gene = ?";
 
-        ResultSet rset = DBManager.executeQuery(sql);
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setString(1, ensg);
+        ResultSet rset = stmt.executeQuery();
 
         EnsgGene ensgGene = null;
 
@@ -248,11 +261,11 @@ public class Output {
     private static List<String> getEnsgGeneNameByHgnc(String hgnc) throws Exception {
         List<String> ensgList = new ArrayList<>();
 
-        String sql = "SELECT ensg_gene "
-                + "FROM ensg_hgnc_gene "
-                + "WHERE hgnc_gene = '" + hgnc + "'";
+        String sql = "SELECT ensg_gene FROM ensg_hgnc_gene WHERE hgnc_gene = ?";
 
-        ResultSet rset = DBManager.executeQuery(sql);
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setString(1, hgnc);
+        ResultSet rset = stmt.executeQuery();
 
         while (rset.next()) {
             ensgList.add(rset.getString("ensg_gene"));
