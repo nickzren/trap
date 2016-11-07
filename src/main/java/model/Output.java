@@ -19,7 +19,7 @@ import object.EnsgGene;
  */
 public class Output {
 
-    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
+    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
     public static boolean isRegionValid; // only check for out of bound , max 100kb
     public static final int maxVariantNumToDisplay = 5000;
     public static final int maxBaseNumToDisplay = 10000;
@@ -259,7 +259,7 @@ public class Output {
     }
 
     private static List<String> getEnsgGeneNameByHgnc(String hgnc) throws Exception {
-        List<String> ensgList = new ArrayList<>();
+        List<String> ensgList = new ArrayList<String>();
 
         String sql = "SELECT ensg_gene FROM ensg_hgnc_gene WHERE hgnc_gene = ?";
 
