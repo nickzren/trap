@@ -14,11 +14,11 @@
                 <address>
                     <strong>Sahar Gelfman (Author)</strong><br>
                     Email: 
-                    <a href="mailto: sg3261@cumc.columbia.edu" target="_blank">
-                        <i class="fa fa-envelope-o">
-                            sg3261@cumc.columbia.edu
-                        </i>
-                    </a>
+                        <a href="mailto: sg3261@cumc.columbia.edu" target="_blank">
+                            <i class="fa fa-envelope-o">
+                                sg3261@cumc.columbia.edu
+                            </i>
+                        </a>
                 </address>
 
                 <address>
