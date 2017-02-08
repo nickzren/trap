@@ -48,7 +48,7 @@
     %>
     <div class="alert alert-warning" style="width:50%">
         <h4>
-            Your region is too large. Please search a region at most 100 kb.
+            Your region is too large. Please search a region at most 10 kb.
         </h4>
     </div>
     <%
