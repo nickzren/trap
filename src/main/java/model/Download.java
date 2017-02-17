@@ -14,6 +14,7 @@ public class Download {
     public static String rootPath;
     public static String url;
     public static boolean isDownloadOnly;
+    public static int maxDownloadNum = 1000;
 
     public static void init() throws Exception {
         url = "";
@@ -56,9 +57,15 @@ public class Download {
                 bw.write(VariantGeneScore.title);
                 bw.newLine();
 
+                int count = 0;
+
                 for (VariantGeneScore variant : Output.variantGeneScoreList) {
                     bw.write(variant.toString());
                     bw.newLine();
+
+                    if (++count == maxDownloadNum) { // restrict to only allow download 1k variants.
+                        break;
+                    }
                 }
 
                 bw.flush();
