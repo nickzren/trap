@@ -20,9 +20,13 @@ public class Search extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            if (Input.query == null
-                    || !Input.query.equalsIgnoreCase(request.getParameter("query"))) {
+            if (DBManager.dbVersion == null) {
+                DBManager.dbVersion = "v2";
+            } else if (request.getParameter("version") != null) {
+                DBManager.dbVersion = request.getParameter("version");
+            }
 
+            if (request.getParameter("query") != null) {
                 if (Download.rootPath == null) {
                     Download.rootPath = getServletContext().getRealPath("/downloads/");
                     Upload.rootPath = getServletContext().getRealPath("/uploads/");
@@ -37,9 +41,9 @@ public class Search extends HttpServlet {
                 Output.init();
 
                 Download.init();
+                
+                setRequest(request);
             }
-
-            setRequest(request);
 
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
@@ -49,12 +53,14 @@ public class Search extends HttpServlet {
     }
 
     private void setRequest(HttpServletRequest request) {
+        request.setAttribute("version", DBManager.dbVersion);
         request.setAttribute("query", Input.query);
         request.setAttribute("uploadErrMsg", Upload.uploadErrMsg);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);
         request.setAttribute("url", Download.url);
         request.setAttribute("isDownloadOnly", Download.isDownloadOnly);
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import object.VariantGeneScore;
+import util.DBManager;
 
 /**
  *
@@ -45,7 +46,7 @@ public class Download {
                 folder.mkdir();
             }
 
-            String fileName = Input.query + ".csv";
+            String fileName = Input.query + "." + DBManager.dbVersion + ".csv";
 
             String filePath = folder.getAbsolutePath() + File.separator + fileName;
 

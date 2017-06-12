@@ -86,7 +86,8 @@ public class Output {
         int pos = Integer.valueOf(tmp[1]);
 
         String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v,"
+                + DBManager.getDBName() + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
 
@@ -119,7 +120,8 @@ public class Output {
         String alt = tmp[3];
 
         String sql = "SELECT v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v , "
+                + DBManager.getDBName() + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.alt=? "
                 + "AND v.ensg_gene = g.ensg_gene";
@@ -162,7 +164,8 @@ public class Output {
 
         if (isRegionValid) {
             String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                    + "FROM snv_score_chr" + chr + " v , ensg_hgnc_gene g "
+                    + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v , "
+                    + DBManager.getDBName() + ".ensg_hgnc_gene g "
                     + "WHERE v.pos BETWEEN ? AND ? "
                     + "AND v.ensg_gene = g.ensg_gene";
 
@@ -200,7 +203,8 @@ public class Output {
         }
 
         String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM snv_score_chr" + ensgGene.getChr() + " v , ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + ensgGene.getChr() + " v , "
+                + DBManager.getDBName() + ".ensg_hgnc_gene g "
                 + "WHERE v.pos BETWEEN ? AND ? "
                 + "AND v.ensg_gene = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
@@ -229,7 +233,7 @@ public class Output {
     }
 
     private static EnsgGene getEnsgGene(String ensg) throws Exception {
-        String sql = "SELECT * FROM ensg_gene_region WHERE ensg_gene = ?";
+        String sql = "SELECT * FROM " + DBManager.getDBName() + ".ensg_gene_region WHERE ensg_gene = ?";
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setString(1, ensg);
@@ -261,7 +265,7 @@ public class Output {
     private static List<String> getEnsgGeneNameByHgnc(String hgnc) throws Exception {
         List<String> ensgList = new ArrayList<String>();
 
-        String sql = "SELECT ensg_gene FROM ensg_hgnc_gene WHERE hgnc_gene = ?";
+        String sql = "SELECT ensg_gene FROM " + DBManager.getDBName() + ".ensg_hgnc_gene WHERE hgnc_gene = ?";
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setString(1, hgnc);

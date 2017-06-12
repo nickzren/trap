@@ -4,6 +4,7 @@
 
 <div>
     <%
+        String version = (String) request.getAttribute("version");
         String query = (String) request.getAttribute("query");
         String uploadErrMsg = (String) request.getAttribute("uploadErrMsg");
         Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
@@ -14,6 +15,14 @@
 
         if (query != null) {
     %>
+    <div class="row">
+        <div class="col-md-10">
+            <h4>
+                Data version: <mark><%=version%></mark>
+            </h4>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-md-10">
             <h4>

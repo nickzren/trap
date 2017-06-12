@@ -14,8 +14,18 @@
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
                     <h2>Data Browser 
                         <small>
-                            <span class="label label-default">v1</span>
+                            <a class="white" href="download.jsp">
+                                <span class="label label-default">choose data version:</span>
+                            </a>
                         </small>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" data-toggle="tooltip"   
+                                    title="TraP version v2"
+                                    onclick="location.href = 'Search?version=v2';">v2</button>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" 
+                                    title="TraP version v1"
+                                    onclick="location.href = 'Search?version=v1';">v1</button>
+                        </div>
                     </h2>
 
                     <div class="row">
