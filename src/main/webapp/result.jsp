@@ -30,16 +30,16 @@
             </h4>
         </div>
 
-        <div class="col-md-2" >
+<!--        <div class="col-md-2" >
             <button style="float: right" type="button"
-                    onclick="location.href = '<%=url%>';"
+                    onclick="location.href = '<%//=url%>';"
                     class="btn btn-default" 
-                    <%if (url.isEmpty()) {%>disabled<%}%>>
+                    <% //if (url.isEmpty()) {%>disabled<%//}%>>
                 <i class="fa fa-download">
                     Download
                 </i>
             </button>
-        </div>
+        </div>-->
     </div>
 
     <br/>

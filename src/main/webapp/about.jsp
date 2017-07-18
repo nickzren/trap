@@ -37,14 +37,39 @@
 
                 <br/>
                 <br/>
-                
+
                 <p class="lead">
                     When choosing a TraP threshold, one should consider that TraP has a very high specificity of 97-99% for both intronic and synonymous variants, and scores benign variants between 0.07-0.10.
                 </p>
-                
+
+                <br/>
+                <hr>
+                <br/>
+
                 <p class="lead">
-                    TraP is still under the review process. The full paper describing TraP will be uploaded once it is published. For deeper explanation and questions about how TraP was validated and evaluated, please contact <a href="mailto: sahar.gelfman@columbia.edu" target="_blank">Sahar Gelfman</a>.
+                    The TraP manuscript describing the methods, calculated features and validations of the scores was published by Nature Communications:
                 </p>  
+
+                <p class="lead">
+                    Gelfman, S., Q. Wang, K.M McSweeney, Z. Ren, F. La Carpia, M. Halvorsen, K. Schoch, F. Ratzon, E.L. Heinzen, M.J. Boland, S. Petrovski and D. B. Goldstein. 2017. Annotating Pathogenic Non-Coding Variants in Genic Regions. Accepted June 5th, 2017. 
+                </p>
+
+                <p class="lead">
+                    Nat Comm. 2017 June 5. doi: <a href="">link</a>
+                </p>
+
+                <p class="lead">
+                    Through the review process, TraP was further developed to catch additional edge cases and the new TraP V2 
+                    model achieves a better accuracy of 92.24% (compared to 91.8% of the previous V1 model described in the paper). 
+                    Therefore, TraP V2 scores are now the default in the webserver. To view the previous TraP V1 scores 
+                    based on the published model, please <a href="Search?version=v1">click here</a>.
+                </p>
+
+                <p class="lead">For other TraP related questions please contact 
+                    <a href="mailto: sahar.gelfman@columbia.edu" target="_blank">
+                        sahar.gelfman@columbia.edu
+                    </a>
+                </p>
             </div>
         </div>
 
