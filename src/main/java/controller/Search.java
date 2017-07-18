@@ -26,7 +26,10 @@ public class Search extends HttpServlet {
                 DBManager.dbVersion = request.getParameter("version");
             }
 
-            if (request.getParameter("query") != null) {
+            // search by upload variant file
+            Upload.init(request);
+
+            if (request.getParameter("query") != null || Upload.isUpload) {
                 if (Download.rootPath == null) {
                     Download.rootPath = getServletContext().getRealPath("/downloads/");
                     Upload.rootPath = getServletContext().getRealPath("/uploads/");
@@ -34,14 +37,12 @@ public class Search extends HttpServlet {
 
                 DBManager.init();
 
-                Upload.init(request);
-
                 Input.init(request);
 
                 Output.init();
 
                 Download.init();
-                
+
                 setRequest(request);
             }
 

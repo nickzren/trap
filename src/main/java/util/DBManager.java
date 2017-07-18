@@ -82,7 +82,7 @@ public class DBManager {
 //            dbUrl = "jdbc:mysql://localhost:3306/vdsdb";
 //            dbUser = "test";
 //            dbPassword = "test";
-//            String dbVersionName = "v1:vdsdb,v2:trap_v2";
+//            String dbVersionName = "v1:vdsdb,v2:trap_v2_060117";
 
             for (String str : dbVersionName.split(",")) {
                 String version = str.split(":")[0];
