@@ -29,7 +29,7 @@
                             </form>
                         </div>
 
-                        <div style="top:6px" class="col-md-2">
+<!--                        <div style="top:6px" class="col-md-2">
                             <form action="Search" method="post" enctype="multipart/form-data">
                                 <button type="button" class="btn btn-primary" 
                                         onclick="this.form.input_file.click()"
@@ -42,7 +42,7 @@
                                 <input id="input_file" type="file" name="input_file" style="visibility:hidden;" 
                                        onchange="this.form.submit()">
                             </form>
-                        </div>
+                        </div>-->
                     </div>
 
                     <p class="text-muted" style="margin-left: 5px">

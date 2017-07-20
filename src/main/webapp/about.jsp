@@ -26,25 +26,8 @@
                 </p>
 
                 <p class="lead">
-                    The TraP score is a prediction between 0-1 of the chance for pathogenicity, the higher the score the higher the damage the variant is predicted to have. The figure below represents TraP and the scores for the training set (panel C), showing the clear separation between cases (>0.459) and benign variants (99% < 0.2). This sets a “minimum pathogenic score” of 0.459 based on the scores of known pathogenic variants. This distinction is also very strong when examining several test sets, such as Clinvar pathogenic and benign variants.
+                    The TraP score is a prediction between 0-1 of the chance for pathogenicity, the higher the score the higher the damage the variant is predicted to have. To facilitate usability among the general user community we describe three recommended thresholds based on the allele frequency tests (as described in the TraP paper, in the Results relating to figure 2D). We consider a TraP score below 0.459 to, in general, be enriched for benign variants. We consider scores ≥ 0.459 and < 0.93 as the intermediate pathogenic range, akin to possibly damaging classifications. These ranges are enriched for cryptic slice sites, effects of cis-acting regulatory sequences and weak to intermediate splice region changes. TraP scores ≥ 0.93 are most likely to damage the final transcript and are considered as probably damaging. These variants are enriched for strong splice region changes and strong cryptic splice site creations.
                 </p>
-
-                <div>
-                    <img src="img/figure1.png">
-                    <br/>
-                    Figure 1. TraP model construction and Evaluation. A) TraP construction workflow and main features calculated for TraP: 1) Information acquisition from all genes and transcripts that harbor by the variant, 2) changes to splice site motif that affect it’s binding affinity to the splicing machinery, 3) creations of new splice junctions that might interact with the splicing machinery, 4) creations and disruptions of cis-acting binding sites to Splicing Regulatory Proteins (SRP), 5) interactions between features, such as a stronger effect of a new splice site on an exon with a weak original splice site (red representing a new splice site). Model is trained using synonymous variants that are either known pathogenic variants (blue box, left) or DNMs from healthy individuals (red box, right). B) A receiver-operating characteristic curve showing the results of ten rounds of 10-fold cross-validations with an average AUC of 0.86. C) Model predictions of the training set show a clear separation of pathogenic variants (blue) vs. control DNMs (red). TraP (Y-axis) exhibits a minimum threshold for pathogenic variants of 0.459, below which reside all control DNMs. GERP++ score (X-axis) considers 49.5% of benign variants as conserved. 
-                </div>
-
-                <br/>
-                <br/>
-
-                <p class="lead">
-                    When choosing a TraP threshold, one should consider that TraP has a very high specificity of 97-99% for both intronic and synonymous variants, and scores benign variants between 0.07-0.10.
-                </p>
-
-                <br/>
-                <hr>
-                <br/>
 
                 <p class="lead">
                     The TraP manuscript describing the methods, calculated features and validations of the scores was published by Nature Communications:
@@ -59,10 +42,11 @@
                 </p>
 
                 <p class="lead">
-                    Through the review process, TraP was further developed to catch additional edge cases and the new TraP V2 
-                    model achieves a better accuracy of 92.24% (compared to 91.8% of the previous V1 model described in the paper). 
-                    Therefore, TraP V2 scores are now the default in the webserver. To view the previous TraP V1 scores 
-                    based on the published model, please <a href="Search?version=v1">click here</a>.
+                    During the review process, TraP was further developed to catch additional edge 
+                    cases and the new TraP V2 model achieves a better accuracy of 92.24% 
+                    (compared to 91.8% of the V1 model described in the paper). Therefore, 
+                    TraP V2 scores are now the default in the webserver. To view the previous 
+                    TraP V1 scores based on the published model, please <a href="Search?version=v1">click here</a>.
                 </p>
 
                 <p class="lead">For other TraP related questions please contact 
