@@ -38,7 +38,7 @@
                 </p>
 
                 <p class="lead">
-                    Nat Comm. 2017 June 5. doi: <a href="https://www.nature.com/articles/s41467-017-00141-2">link</a>
+                    Nat Comm. 2017 June 5. doi: <a href="https://www.nature.com/articles/s41467-017-00141-2">10.1038/s41467-017-00141-2</a>
                 </p>
 
                 <p class="lead">
