@@ -61,7 +61,6 @@ public class Search extends HttpServlet {
         request.setAttribute("isRegionValid", Output.isRegionValid);
         request.setAttribute("url", Download.url);
         request.setAttribute("isDownloadOnly", Download.isDownloadOnly);
-
     }
 
     @Override

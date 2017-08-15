@@ -19,7 +19,7 @@ import object.EnsgGene;
  */
 public class Output {
 
-    public static ArrayList<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
+    public static List<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
     public static boolean isRegionValid; // only check for out of bound , max 100kb
     public static final int maxVariantNumToDisplay = 5000;
     public static final int maxBaseNumToDisplay = 10000;

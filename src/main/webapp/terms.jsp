@@ -20,9 +20,12 @@
 
                 <h4><i class="fa fa-star"></i> Citation</h4>                
                 <p>TraP, New York City, New York (URL: http://trap-score.org) [date (month, year) accessed].</p>
-<!--                <p>                    
-                    <mark>paper citation here ...</mark>
-                </p>-->
+                <p>                    
+                    Gelfman, S., Wang, Q., McSweeney, K.M., Ren, Z., La Carpia, F., Halvorsen, M., Schoch, K., Ratzon, F., Heinzen,
+                    E.L., Boland, M.J., Petrovski, S. & D. B. Goldstein. Annotating pathogenic non-coding variants in genic regions. 
+                    <em>Nat Commun 8, 236, <a href="https://www.nature.com/articles/s41467-017-00141-2" 
+                                   target="_blank">doi:10.1038/s41467-017-00141-2 (2017)</a></em>.
+                </p>
             </div>
 
         </div>

@@ -3,6 +3,8 @@ package model;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import object.VariantGeneScore;
 import util.DBManager;
 
@@ -82,7 +84,10 @@ public class Download {
             isDownloadOnly = false;
         } else {
             isDownloadOnly = true;
-            Output.variantGeneScoreList.clear(); // free memory
+//            Output.variantGeneScoreList.clear(); // free memory
+
+            // hack to restrict only display 1000 rows
+            Output.variantGeneScoreList = Output.variantGeneScoreList.subList(0, maxDownloadNum);
         }
     }
 }

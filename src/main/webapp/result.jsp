@@ -1,5 +1,5 @@
+<%@page import="java.util.List"%>
 <%@page import="object.VariantGeneScore"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 
 <div>
@@ -10,8 +10,8 @@
         Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
         String url = (String) request.getAttribute("url");
         Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
-        ArrayList<VariantGeneScore> variantGeneScoreList
-                = (ArrayList<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
+        List<VariantGeneScore> variantGeneScoreList
+                = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
         if (query != null) {
     %>
@@ -22,7 +22,7 @@
             </h4>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-10">
             <h4>
@@ -30,16 +30,16 @@
             </h4>
         </div>
 
-<!--        <div class="col-md-2" >
-            <button style="float: right" type="button"
-                    onclick="location.href = '<%//=url%>';"
-                    class="btn btn-default" 
-                    <% //if (url.isEmpty()) {%>disabled<%//}%>>
-                <i class="fa fa-download">
-                    Download
-                </i>
-            </button>
-        </div>-->
+        <!--        <div class="col-md-2" >
+                    <button style="float: right" type="button"
+                            onclick="location.href = '<%//=url%>';"
+                            class="btn btn-default" 
+        <% //if (url.isEmpty()) {%>disabled<%//}%>>
+    <i class="fa fa-download">
+        Download
+    </i>
+</button>
+</div>-->
     </div>
 
     <br/>
@@ -61,14 +61,6 @@
         </h4>
     </div>
     <%
-    } else if (isDownloadOnly) {
-    %>
-    <div class="alert alert-warning" style="width:80%">
-        <h4>
-            The search result is too large to display. Please click the 'Download' button to download your results.
-        </h4>
-    </div>
-    <%
     } else if (variantGeneScoreList.isEmpty()) {
     %>
     <div class="alert alert-warning" style="width:30%">
@@ -78,6 +70,16 @@
     </div>
     <%
     } else {
+        if (isDownloadOnly) {
+    %>
+    <div class="alert alert-warning" style="width:90%">
+        <h4>
+            <!--The search result is too large to display. Please click the 'Download' button to download your results.-->
+            Please notice that the displayed variant list is truncated. To obtain the full database please refer to the terms of use.
+        </h4>
+    </div>
+    <%
+        }
     %>   
     <table class="table table-striped">
         <thead>
