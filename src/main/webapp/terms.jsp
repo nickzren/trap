@@ -13,7 +13,14 @@
 
                 <h4><i class="fa fa-gavel"></i> Terms of use</h4>
                 <p>
-                    The TraP tool and the TraP scores generated and presented by the TraP tool are protected by copyright.  © <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date())%> The Trustees of Columbia University in the City of New York.  All Rights Reserved.  Any reproduction, distribution, display, or creation of derivative works is prohibited without the express written permission of the copyright owner.
+                    TraP is made available for internal, non-commercial, academic and research purposes. 
+                    The TraP webserver and the TraP scores generated and presented by the TraP webserver are 
+                    protected by copyright. © <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date())%>
+                    The Trustees of Columbia University in the City of New York. 
+                    All Rights Reserved. Any reproduction, distribution, display, or creation of derivative works 
+                    is prohibited without the express written permission of the copyright owner. 
+                    For inquiries relating non-commercial and commercial agreements, please contact 
+                    <a href="mailto: jm4381@columbia.edu" target="_blank">Joan Martinez</a>.
                 </p>
 
                 <br/>
