@@ -54,12 +54,6 @@
                     </p>
                 </div>
 
-                <div class="alert alert-warning" style="width:100%">
-                    <h4>
-                        TraP is made available for internal, non-commercial, academic and research purposes. Using TraP for any commercial purpose is strictly prohibited without a license.
-                    </h4>
-                </div>
-
                 <%@include file="result.jsp" %>
             </div>
 
