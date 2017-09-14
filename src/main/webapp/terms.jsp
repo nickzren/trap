@@ -19,8 +19,9 @@
                     The Trustees of Columbia University in the City of New York. 
                     All Rights Reserved. Any reproduction, distribution, display, or creation of derivative works 
                     is prohibited without the express written permission of the copyright owner. 
-                    For inquiries relating non-commercial and commercial agreements, please contact 
-                    <a href="mailto: jm4381@columbia.edu" target="_blank">Joan Martinez</a>.
+                    The express academic and commercial licenses to the TraP database are available
+                    <a href="http://innovation.columbia.edu/technologies/cu17233_pathogenicity-database-for-identification-of-disease-causing-non-coding-genetic-variations"
+                       target="_blank">here</a>.
                 </p>
 
                 <br/>
