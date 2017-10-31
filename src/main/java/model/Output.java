@@ -24,22 +24,22 @@ public class Output {
     public static final int maxVariantNumToDisplay = 5000;
     public static final int maxBaseNumToDisplay = 10000;
 
-    public static void init() throws Exception {
+    public static void init(String query) throws Exception {
         variantGeneScoreList.clear();
         isRegionValid = true;
 
         if (Upload.isUpload) {
             initVariantListByVariantFile();
-        } else if (Input.query.split("-").length == 4) { // search by variant id
-            initVariantListByVariantId(Input.query);
-        } else if (Input.query.contains(":")) { // search by region
-            initVariantListByRegion(Input.query);
-        } else if (Input.query.split("-").length == 2) { // search by variant site
-            initVariantListByVariantSite(Input.query);
-        } else if (Input.query.startsWith("ENSG")) { // search by ENSG gene
-            initVariantListByEnsgGene(Input.query);
+        } else if (query.split("-").length == 4) { // search by variant id
+            initVariantListByVariantId(query);
+        } else if (query.contains(":")) { // search by region
+            initVariantListByRegion(query);
+        } else if (query.split("-").length == 2) { // search by variant site
+            initVariantListByVariantSite(query);
+        } else if (query.startsWith("ENSG")) { // search by ENSG gene
+            initVariantListByEnsgGene(query);
         } else { // search by HGNC gene or return nothing found
-            initVariantListByHgncGene(Input.query);
+            initVariantListByHgncGene(query);
         }
     }
 

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Download;
-import model.Input;
 import model.Output;
 import model.Upload;
 import util.DBManager;
@@ -36,14 +35,20 @@ public class Search extends HttpServlet {
                 }
 
                 DBManager.init();
+                
+                String query;
 
-                Input.init(request);
+                if (Upload.isUpload) { // search by variants file
+                    query = Upload.fileName;
+                } else { // search by gene or region or variant
+                    query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
+                }
 
-                Output.init();
+                Output.init(query);
 
-                Download.init();
+                Download.init(query);
 
-                setRequest(request);
+                setRequest(request, query);
             }
 
             request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -53,9 +58,9 @@ public class Search extends HttpServlet {
         }
     }
 
-    private void setRequest(HttpServletRequest request) {
+    private void setRequest(HttpServletRequest request, String query) {
         request.setAttribute("version", DBManager.dbVersion);
-        request.setAttribute("query", Input.query);
+        request.setAttribute("query", query);
         request.setAttribute("uploadErrMsg", Upload.uploadErrMsg);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);

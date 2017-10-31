@@ -3,8 +3,6 @@ package model;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import object.VariantGeneScore;
 import util.DBManager;
 
@@ -19,24 +17,24 @@ public class Download {
     public static boolean isDownloadOnly;
     public static int maxDownloadNum = 1000;
 
-    public static void init() throws Exception {
+    public static void init(String query) throws Exception {
         url = "";
         isDownloadOnly = false;
 
-        generateFile();
+        generateFile(query);
 
         isDownloadOnly();
     }
 
-    private static void generateFile() throws Exception {
+    private static void generateFile(String query) throws Exception {
         if (!Output.variantGeneScoreList.isEmpty()) { // TRUE - no results from search query
             String folderPath = rootPath + File.separator;
 
             if (Upload.isUpload) {
                 folderPath += "variants";
-            } else if (Input.query.split("-").length == 4) {
+            } else if (query.split("-").length == 4) {
                 folderPath += "variant";
-            } else if (Input.query.contains(":")) {
+            } else if (query.contains(":")) {
                 folderPath += "region";
             } else {
                 folderPath += "gene";
@@ -48,7 +46,7 @@ public class Download {
                 folder.mkdir();
             }
 
-            String fileName = Input.query + "." + DBManager.dbVersion + ".csv";
+            String fileName = query + "." + DBManager.dbVersion + ".csv";
 
             String filePath = folder.getAbsolutePath() + File.separator + fileName;
 
