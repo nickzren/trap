@@ -114,6 +114,7 @@ public class Search extends HttpServlet {
     	String encoding = request.getCharacterEncoding();
     	if(encoding==null || encoding.trim().isEmpty()) encoding = "UTF-8";
     	response.setContentType("text/xml");
+    	response.setCharacterEncoding(encoding);
     	final OutputStream out = response.getOutputStream();
     	try {
     		final XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newFactory();
