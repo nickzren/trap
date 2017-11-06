@@ -30,6 +30,10 @@
                 </p>
 
                 <p class="lead">
+                    TraP is pre-computed for all possible substitutions of 20,686 human protein coding genes, covering ~1.3 billion genomic positions based on the hg19 genome assembly. 
+                </p>
+
+                <p class="lead">
                     The TraP manuscript describing the methods, calculated features and validations of the scores was published by Nature Communications:
                 </p>  
 
