@@ -167,7 +167,8 @@ public class Output {
                     + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v , "
                     + DBManager.getDBName() + ".ensg_hgnc_gene g "
                     + "WHERE v.pos BETWEEN ? AND ? "
-                    + "AND v.ensg_gene = g.ensg_gene";
+                    + "AND v.ensg_gene = g.ensg_gene "
+                    + "LIMIT 1000"; // limit to only display 1000 variants
 
             PreparedStatement stmt = DBManager.prepareStatement(sql);
             stmt.setInt(1, start);
@@ -207,7 +208,8 @@ public class Output {
                 + DBManager.getDBName() + ".ensg_hgnc_gene g "
                 + "WHERE v.pos BETWEEN ? AND ? "
                 + "AND v.ensg_gene = ? "
-                + "AND v.ensg_gene = g.ensg_gene";
+                + "AND v.ensg_gene = g.ensg_gene "
+                + "LIMIT 1000"; // limit to only display 1000 variants
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setInt(1, ensgGene.getStart());
