@@ -21,7 +21,7 @@ public class Output {
 
     public static List<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
     public static boolean isRegionValid; // only check for out of bound , max 100kb
-    public static final int maxVariantNumToDisplay = 5000;
+    public static final int maxRowToQuery = 5000;
     public static final int maxBaseNumToDisplay = 10000;
 
     public static void init(String query) throws Exception {
@@ -168,7 +168,7 @@ public class Output {
                     + DBManager.getDBName() + ".ensg_hgnc_gene g "
                     + "WHERE v.pos BETWEEN ? AND ? "
                     + "AND v.ensg_gene = g.ensg_gene "
-                    + "LIMIT 1000"; // limit to only display 1000 variants
+                    + "LIMIT " + maxRowToQuery;
 
             PreparedStatement stmt = DBManager.prepareStatement(sql);
             stmt.setInt(1, start);
@@ -203,13 +203,17 @@ public class Output {
             return;
         }
 
-        String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + ensgGene.getChr() + " v , "
-                + DBManager.getDBName() + ".ensg_hgnc_gene g "
+        String hgncGene = getHgncGene(ensg);
+
+        if (hgncGene.isEmpty()) {
+            return;
+        }
+
+        String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,v.score "
+                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + ensgGene.getChr() + " v "
                 + "WHERE v.pos BETWEEN ? AND ? "
                 + "AND v.ensg_gene = ? "
-                + "AND v.ensg_gene = g.ensg_gene "
-                + "LIMIT 1000"; // limit to only display 1000 variants
+                + "LIMIT " + maxRowToQuery;
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setInt(1, ensgGene.getStart());
@@ -225,7 +229,7 @@ public class Output {
                             rset.getString("ref"),
                             rset.getString("alt"),
                             rset.getString("ensg_gene"),
-                            rset.getString("hgnc_gene"),
+                            hgncGene,
                             rset.getFloat("score"));
 
             variantGeneScoreList.add(variantGeneScore);
@@ -254,6 +258,20 @@ public class Output {
         rset.close();
 
         return ensgGene;
+    }
+
+    private static String getHgncGene(String ensg) throws Exception {
+        String sql = "SELECT hgnc_gene FROM " + DBManager.getDBName() + ".ensg_hgnc_gene WHERE ensg_gene = ?";
+
+        PreparedStatement stmt = DBManager.prepareStatement(sql);
+        stmt.setString(1, ensg);
+        ResultSet rset = stmt.executeQuery();
+
+        if (rset.next()) {
+            return rset.getString("hgnc_gene");
+        }
+
+        return "";
     }
 
     public static void initVariantListByHgncGene(String hgnc) throws Exception {

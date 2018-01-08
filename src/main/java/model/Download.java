@@ -78,7 +78,7 @@ public class Download {
     }
 
     private static void isDownloadOnly() {
-        if (Output.variantGeneScoreList.size() <= Output.maxVariantNumToDisplay) {
+        if (Output.variantGeneScoreList.size() <= maxDownloadNum) {
             isDownloadOnly = false;
         } else {
             isDownloadOnly = true;
