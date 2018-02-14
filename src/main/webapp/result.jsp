@@ -99,7 +99,11 @@
                 for (VariantGeneScore variant : variantGeneScoreList) {
             %>
             <tr class="text-center">
-                <td><%=variant.getVariantId()%></td>
+                <td><%=variant.getVariantId()%> &nbsp 
+                    <a target="_blank" href="https://varsome.com/variant/hg19/<%=variant.getVariantId()%>">
+                        <span class="label label-default">varsome</span>
+                    </a>
+                </td>
                 <td><%=variant.getChr()%></td>
                 <td><%=variant.getPos()%></td>
                 <td><%=variant.getRef()%></td>
