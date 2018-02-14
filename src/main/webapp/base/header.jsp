@@ -12,7 +12,6 @@
                 <li><a href="Search?version=v2">Home</a></li>
                 <li><a href="about.jsp">About</a></li>
                 <li><a href="terms.jsp">Terms</a></li>
-                <!--<li><a href="download.jsp">Download</a></li>-->
                 <li><a href="contact.jsp">Contact</a></li>
             </ul>
         </div>
