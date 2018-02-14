@@ -91,7 +91,7 @@
                 <th class="text-center">Alt</th>
                 <th class="text-center">ENSG Gene</th>
                 <th class="text-center">HGNC Gene</th>
-                <th class="text-center">Score</th>
+                <th class="text-center">TraP Score</th>
             </tr> 
         </thead>
         <tbody>
