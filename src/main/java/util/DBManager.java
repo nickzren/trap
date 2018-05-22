@@ -69,15 +69,20 @@ public class DBManager {
     private static void initDataFromSystemConfig() {
         try {
             // server config
-            InputStream input = new FileInputStream(Data.SYSTEM_CONFIG);
-            Properties prop = new Properties();
-            prop.load(input);
+            // InputStream input = new FileInputStream(Data.SYSTEM_CONFIG);
+            // Properties prop = new Properties();
+            // prop.load(input);
 
-            dbUrl = prop.getProperty("dburl");
-            dbUser = prop.getProperty("dbuser");
-            dbPassword = prop.getProperty("dbpassword");
-            String dbVersionName = prop.getProperty("dbversionname");
-            
+            // dbUrl = prop.getProperty("dburl");
+            // dbUser = prop.getProperty("dbuser");
+            // dbPassword = prop.getProperty("dbpassword");
+            // String dbVersionName = prop.getProperty("dbversionname");
+
+            dbUrl = System.getProperty("TRAP_DB_URL");
+            dbUser = System.getProperty("TRAP_DB_USER");
+            dbPassword = System.getProperty("TRAP_DB_PASSWORD");
+            String dbVersionName = "v1:vdsdb,v2:trap_v2_060117"; 
+
             // local config
 //            dbUrl = "jdbc:mysql://localhost:3306/vdsdb";
 //            dbUser = "test";
@@ -89,7 +94,7 @@ public class DBManager {
                 String name = str.split(":")[1];
 
                 dbVersionNameMap.put(version, name);
-            }
+             }
         } catch (Exception e) {
             e.printStackTrace();
         }
