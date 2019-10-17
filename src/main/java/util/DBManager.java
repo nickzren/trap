@@ -30,7 +30,7 @@ public class DBManager {
 
         if (dataSource == null) {
             PoolProperties p = new PoolProperties();
-            p.setDriverClassName("com.mysql.jdbc.Driver");
+            p.setDriverClassName("com.mysql.cj.jdbc.Driver");
             p.setUrl(dbUrl);
             p.setUsername(dbUser);
             p.setPassword(dbPassword);
@@ -74,11 +74,12 @@ public class DBManager {
             dbPassword = System.getProperty("TRAP_DB_PASSWORD");
 
             // local config
-//            dbUrl = "jdbc:mysql://localhost:3306/vdsdb";
+            // the config below is for MySQL 8
+//            dbUrl = "jdbc:mysql://localhost:3306/trap_v3?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
 //            dbUser = "test";
 //            dbPassword = "test";
 
-            String dbVersionName = "v1:vdsdb,v2:trap_v2_060117";
+            String dbVersionName = "v1:vdsdb,v2:trap_v2_060117,v3:trap_v3";
             for (String str : dbVersionName.split(",")) {
                 String version = str.split(":")[0];
                 String name = str.split(":")[1];

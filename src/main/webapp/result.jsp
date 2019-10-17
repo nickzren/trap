@@ -3,11 +3,10 @@
 <%@page import="java.util.Map"%>
 
 <%
-    String version = (String) request.getAttribute("version");
     String query = (String) request.getAttribute("query");
     String uploadErrMsg = (String) request.getAttribute("uploadErrMsg");
     Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
-    String url = (String) request.getAttribute("url");
+//    String url = (String) request.getAttribute("url");
     Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
     List<VariantGeneScore> variantGeneScoreList
             = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
@@ -17,7 +16,7 @@
 <div class="row">
     <div class="col-md-10">
         <h4>
-            Data version: <mark><%=version%></mark>
+            Data version: <mark><%=request.getAttribute("version")%></mark>
         </h4>
     </div>
 </div>

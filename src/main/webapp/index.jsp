@@ -29,20 +29,44 @@
                             </form>
                         </div>
 
-                        <!--                        <div style="top:6px" class="col-md-2">
-                                                    <form action="Search" method="post" enctype="multipart/form-data">
-                                                        <button type="button" class="btn btn-primary" 
-                                                                onclick="this.form.input_file.click()"
-                                                                data-toggle="tooltip" 
-                                                                title="Upload your variants text/plain file, single variant per line (chr-pos-ref-alt)">
-                                                            <i class="fa fa-upload"></i>
-                                                            Search variants
-                                                        </button>
-                        
-                                                        <input id="input_file" type="file" name="input_file" style="visibility:hidden;" 
-                                                               onchange="this.form.submit()">
-                                                    </form>
-                                                </div>-->
+                        <%
+                            String version = request.getParameter("version");
+                            if (version == null) {
+                                version = (String) request.getAttribute("version");
+
+                                if (version == null) {
+                                    version = "v3";
+                                }
+                            }
+                        %>
+
+                        <div style="top:6px" class="col-md-2">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="versionMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Data version <%=version%>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="versionMenu">
+                                    <li><a href="Search?version=v3">v3</a></li>
+                                    <li><a href="Search?version=v2">v2</a></li>
+                                    <li><a href="Search?version=v1">v1</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div style="top:6px" class="col-md-2">
+                            <form action="Search" method="post" enctype="multipart/form-data">
+                                <button type="button" class="btn btn-primary" 
+                                        onclick="this.form.input_file.click()"
+                                        data-toggle="tooltip" 
+                                        title="Upload your variants text/plain file, single variant per line (chr-pos-ref-alt)">
+                                    <i class="fa fa-upload"></i>
+                                    Search variants
+                                </button>
+
+                                <input id="input_file" type="file" name="input_file" style="visibility:hidden;" 
+                                       onchange="this.form.submit()">
+                            </form>
+                        </div>-->
                     </div>
 
                     <p class="text-muted" style="margin-left: 5px">

@@ -20,7 +20,7 @@ public class Search extends HttpServlet {
             throws ServletException, IOException {
         try {
             if (DBManager.dbVersion == null) {
-                DBManager.dbVersion = "v2";
+                DBManager.dbVersion = "v3";
             } else if (request.getParameter("version") != null) {
                 DBManager.dbVersion = request.getParameter("version");
             }
