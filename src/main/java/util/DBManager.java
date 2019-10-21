@@ -74,7 +74,7 @@ public class DBManager {
             dbPassword = System.getProperty("TRAP_DB_PASSWORD");
 
             // local config
-            // the config below is for MySQL 8
+//             the config below is for MySQL 8
 //            dbUrl = "jdbc:mysql://localhost:3306/trap_v3?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
 //            dbUser = "test";
 //            dbPassword = "test";
