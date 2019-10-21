@@ -28,9 +28,7 @@ public class Output {
         variantGeneScoreList.clear();
         isRegionValid = true;
 
-        if (Upload.isUpload) {
-            initVariantListByVariantFile();
-        } else if (query.split("-").length == 4) { // search by variant id
+        if (query.split("-").length == 4) { // search by variant id
             initVariantListByVariantId(query);
         } else if (query.contains(":")) { // search by region
             initVariantListByRegion(query);
@@ -41,42 +39,6 @@ public class Output {
         } else { // search by HGNC gene or return nothing found
             initVariantListByHgncGene(query);
         }
-    }
-
-    private static void initVariantListByVariantFile() throws Exception {
-        if (Upload.uploadErrMsg != null) {
-            return;
-        }
-
-        File f = new File(Upload.filePath);
-        FileInputStream fstream = new FileInputStream(f);
-        DataInputStream in = new DataInputStream(fstream);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-        String lineStr = "";
-        while ((lineStr = br.readLine()) != null) {
-            if (!lineStr.isEmpty()) {
-                lineStr = lineStr.replaceAll("( )+", "");
-
-                if (lineStr.contains("-")) {
-                    if (lineStr.split("-").length == 2) {
-                        initVariantListByVariantSite(lineStr);
-                    } else if (lineStr.split("-").length == 4) {
-                        initVariantListByVariantId(lineStr);
-                    }
-                } else {
-                    Upload.uploadErrMsg = "Wrong input values in your variant file: " + lineStr;
-                    f.delete();
-                    return;
-                }
-            }
-        }
-
-        br.close();
-        in.close();
-        fstream.close();
-
-        f.delete();
     }
 
     public static void initVariantListByVariantSite(String site) throws Exception {

@@ -55,20 +55,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- <div style="top:6px" class="col-md-2">
-                            <form action="Search" method="post" enctype="multipart/form-data">
-                                <button type="button" class="btn btn-primary" 
-                                        onclick="this.form.input_file.click()"
-                                        data-toggle="tooltip" 
-                                        title="Upload your variants text/plain file, single variant per line (chr-pos-ref-alt)">
-                                    <i class="fa fa-upload"></i>
-                                    Search variants
-                                </button>
-
-                                <input id="input_file" type="file" name="input_file" style="visibility:hidden;" 
-                                       onchange="this.form.submit()">
-                            </form>
-                        </div>-->
                     </div>
 
                     <p class="text-muted" style="margin-left: 5px">

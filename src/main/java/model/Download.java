@@ -30,9 +30,7 @@ public class Download {
         if (!Output.variantGeneScoreList.isEmpty()) { // TRUE - no results from search query
             String folderPath = rootPath + File.separator;
 
-            if (Upload.isUpload) {
-                folderPath += "variants";
-            } else if (query.split("-").length == 4) {
+            if (query.split("-").length == 4) {
                 folderPath += "variant";
             } else if (query.contains(":")) {
                 folderPath += "region";

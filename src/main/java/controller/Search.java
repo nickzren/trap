@@ -14,7 +14,6 @@ import javax.xml.stream.XMLStreamWriter;
 
 import model.Download;
 import model.Output;
-import model.Upload;
 import object.VariantGeneScore;
 import util.DBManager;
 
@@ -33,24 +32,15 @@ public class Search extends HttpServlet {
                 DBManager.dbVersion = request.getParameter("version");
             }
 
-            // search by upload variant file
-            Upload.init(request);
-
-            if (request.getParameter("query") != null || Upload.isUpload) {
+            if (request.getParameter("query") != null) {
                 if (Download.rootPath == null) {
                     Download.rootPath = getServletContext().getRealPath("/downloads/");
-                    Upload.rootPath = getServletContext().getRealPath("/uploads/");
                 }
 
                 DBManager.init();
 
-                String query;
-
-                if (Upload.isUpload) { // search by variants file
-                    query = Upload.fileName;
-                } else { // search by gene or region or variant
-                    query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
-                }
+                // search by gene or region or variant
+                String query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
 
                 Output.init(query);
 
@@ -74,7 +64,6 @@ public class Search extends HttpServlet {
     private void setRequest(HttpServletRequest request, String query) {
         request.setAttribute("version", DBManager.dbVersion);
         request.setAttribute("query", query);
-        request.setAttribute("uploadErrMsg", Upload.uploadErrMsg);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);
         request.setAttribute("url", Download.url);
@@ -120,8 +109,8 @@ public class Search extends HttpServlet {
             w.writeStartElement("trap");
             w.writeComment("TraP is protected by copyright. " + new java.text.SimpleDateFormat("yyyy").format(new java.util.Date())
                     + " TThe Trustees of Columbia University in the City of New York. All Rights Reserved.\n"
-                            + "TraP is made available for internal, non-commercial, academic and research purposes.  "
-                            + "Using TraP for any commercial purpose is strictly prohibited without a license.");
+                    + "TraP is made available for internal, non-commercial, academic and research purposes.  "
+                    + "Using TraP for any commercial purpose is strictly prohibited without a license.");
             if (variants != null) {
                 for (final VariantGeneScore variant : variants) {
                     variant.writeAsXml(w);
