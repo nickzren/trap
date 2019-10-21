@@ -73,31 +73,38 @@ public class VariantGeneScore {
         return score;
     }
 
-    /** helper function to write <tag>value</tag> */
-    private static void writeValueAsXml(final XMLStreamWriter w,final String tag,final Object value) throws XMLStreamException {
-    	if(value==null) return;
-    	final String s = String.valueOf(value);
-    	if(s.trim().isEmpty()) return;
-    	w.writeStartElement(tag);
-    	w.writeCharacters(s);
-    	w.writeEndElement();
-    	}
-    
-    /** save this variant as XML */
-    public void writeAsXml(final XMLStreamWriter w) throws XMLStreamException {
-    	w.writeStartElement("VariantGeneScore");
-    	w.writeAttribute("id", this.variantId);
-    	writeValueAsXml(w,"Chr", this.chr);
-    	writeValueAsXml(w,"Pos", this.pos);
-    	writeValueAsXml(w,"Ref", this.ref);
-    	writeValueAsXml(w,"Alt", this.alt);
-    	writeValueAsXml(w,"ENSG", this.ensgGene);
-    	writeValueAsXml(w,"HGNC", this.hgncGene);
-    	writeValueAsXml(w,"score", this.score);
-    	w.writeEndElement();//close 'variant'
+    /**
+     * helper function to write <tag>value</tag>
+     */
+    private static void writeValueAsXml(final XMLStreamWriter w, final String tag, final Object value) throws XMLStreamException {
+        if (value == null) {
+            return;
+        }
+        final String s = String.valueOf(value);
+        if (s.trim().isEmpty()) {
+            return;
+        }
+        w.writeStartElement(tag);
+        w.writeCharacters(s);
+        w.writeEndElement();
     }
-    
-    
+
+    /**
+     * save this variant as XML
+     */
+    public void writeAsXml(final XMLStreamWriter w) throws XMLStreamException {
+        w.writeStartElement("VariantGeneScore");
+        w.writeAttribute("id", this.variantId);
+        writeValueAsXml(w, "Chr", this.chr);
+        writeValueAsXml(w, "Pos", this.pos);
+        writeValueAsXml(w, "Ref", this.ref);
+        writeValueAsXml(w, "Alt", this.alt);
+        writeValueAsXml(w, "ENSG", this.ensgGene);
+        writeValueAsXml(w, "HGNC", this.hgncGene);
+        writeValueAsXml(w, "score", this.score);
+        w.writeEndElement();//close 'variant'
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
