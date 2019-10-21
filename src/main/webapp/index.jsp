@@ -11,6 +11,8 @@
 
             <div class="container-main">                
 
+                <div class="alert alert-info" role="alert"><strong>Updated to TraP version 3.0!  (Oct 2019)</strong></div>
+
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
                     <h2>Data Browser</h2>
 

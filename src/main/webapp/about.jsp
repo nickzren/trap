@@ -25,7 +25,7 @@
 
                 <br/>
 
-                <h4>TraP News, 09/2019:</h4>
+                <h4>TraP News, 10/2019:</h4>
 
                 <p>
                     TraP has been upgraded to version 3.0. The new TraP model has an improved algorithm that catches additional creations and disruptions of cryptic splice sites. TraP will now catch all possible cryptic changes made by a variant and decide which has the stronger effect while giving precedence to creations of cryptic splice sites where none existed, rather than disruptions of existing cryptic splice sites (that are not part of the gene’s known junctions). 
