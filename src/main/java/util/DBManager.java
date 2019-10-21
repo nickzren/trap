@@ -1,11 +1,7 @@
 package util;
 
-import global.Data;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
-import java.util.Properties;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
@@ -16,8 +12,6 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
 public class DBManager {
 
     private static DataSource dataSource;
-    private static Connection connection;
-    private static Statement statement;
 
     public static String dbVersion;
     private static String dbUrl;
@@ -25,7 +19,11 @@ public class DBManager {
     private static String dbPassword;
     private static HashMap<String, String> dbVersionNameMap = new HashMap<String, String>();
 
+    private static String dbVersionName = "v1:vdsdb,v2:trap_v2_060117,v3:trap_v3";
+
     public static void init() throws Exception {
+        initDBVersion();
+
         initDataFromSystemConfig();
 
         if (dataSource == null) {
@@ -54,15 +52,15 @@ public class DBManager {
                     + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
             dataSource = new DataSource();
             dataSource.setPoolProperties(p);
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
         }
+    }
 
-        if (connection == null || connection.isClosed()) {
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-        } else if (statement.isClosed()) {
-            statement = connection.createStatement();
+    private static void initDBVersion() {
+        for (String str : dbVersionName.split(",")) {
+            String version = str.split(":")[0];
+            String name = str.split(":")[1];
+
+            dbVersionNameMap.put(version, name);
         }
     }
 
@@ -78,25 +76,17 @@ public class DBManager {
 //            dbUrl = "jdbc:mysql://localhost:3306/trap_v3?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
 //            dbUser = "test";
 //            dbPassword = "test";
-
-            String dbVersionName = "v1:vdsdb,v2:trap_v2_060117,v3:trap_v3";
-            for (String str : dbVersionName.split(",")) {
-                String version = str.split(":")[0];
-                String name = str.split(":")[1];
-
-                dbVersionNameMap.put(version, name);
-             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static ResultSet executeQuery(String sqlQuery) throws SQLException {
-        return statement.executeQuery(sqlQuery);
+        return dataSource.getConnection().createStatement().executeQuery(sqlQuery);
     }
 
     public static PreparedStatement prepareStatement(String sqlQuery) throws SQLException {
-        return connection.prepareStatement(sqlQuery);
+        return dataSource.getConnection().prepareStatement(sqlQuery);
     }
 
     public static String getDBName() {
