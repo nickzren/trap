@@ -12,7 +12,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import model.Download;
 import model.Output;
 import object.VariantGeneScore;
 import util.DBManager;
@@ -33,18 +32,12 @@ public class Search extends HttpServlet {
             }
 
             if (request.getParameter("query") != null) {
-                if (Download.rootPath == null) {
-                    Download.rootPath = getServletContext().getRealPath("/downloads/");
-                }
-
                 DBManager.init();
 
                 // search by gene or region or variant
                 String query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
 
                 Output.init(query);
-
-                Download.init(query);
 
                 setRequest(request, query);
             }
@@ -66,8 +59,6 @@ public class Search extends HttpServlet {
         request.setAttribute("query", query);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);
-        request.setAttribute("url", Download.url);
-        request.setAttribute("isDownloadOnly", Download.isDownloadOnly);
     }
 
     @Override

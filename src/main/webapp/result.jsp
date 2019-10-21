@@ -4,10 +4,7 @@
 
 <%
     String query = (String) request.getAttribute("query");
-    String uploadErrMsg = (String) request.getAttribute("uploadErrMsg");
     Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
-//    String url = (String) request.getAttribute("url");
-    Boolean isDownloadOnly = (Boolean) request.getAttribute("isDownloadOnly");
     List<VariantGeneScore> variantGeneScoreList
             = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
@@ -27,31 +24,12 @@
             Search: <mark><%=query%></mark>
         </h4>
     </div>
-
-    <!--        <div class="col-md-2" >
-                <button style="float: right" type="button"
-                        onclick="location.href = '<%//=url%>';"
-                        class="btn btn-default" 
-    <% //if (url.isEmpty()) {%>disabled<%//}%>>
-<i class="fa fa-download">
-    Download
-</i>
-</button>
-</div>-->
 </div>
 
 <br/>
 
 <%
-    if (uploadErrMsg != null) {
-%>
-<div class="alert alert-warning" style="width:50%">
-    <h4>
-        <%=uploadErrMsg%>
-    </h4>
-</div>
-<%
-} else if (!isRegionValid) {
+    if (!isRegionValid) {
 %>
 <div class="alert alert-warning" style="width:50%">
     <h4>
@@ -68,17 +46,7 @@
 </div>
 <%
 } else {
-    if (isDownloadOnly) {
-%>
-<div class="alert alert-warning" style="width:90%">
-    <h4>
-        <!--The search result is too large to display. Please click the 'Download' button to download your results.-->
-        Please notice that the displayed variant list is truncated. To obtain the full database please refer to the terms of use.
-    </h4>
-</div>
-<%
-    }
-%>   
+%>  
 <table class="table table-striped">
     <thead>
         <tr>
