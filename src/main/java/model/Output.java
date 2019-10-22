@@ -1,10 +1,5 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import object.VariantGeneScore;
 import util.DBManager;
@@ -19,29 +14,24 @@ import object.EnsgGene;
  */
 public class Output {
 
-    public static List<VariantGeneScore> variantGeneScoreList = new ArrayList<VariantGeneScore>();
-    public static boolean isRegionValid; // only check for out of bound , max 100kb
-    public static final int maxRowToQuery = 5000;
-    public static final int maxBaseNumToDisplay = 10000;
+    private static final int maxRowToQuery = 5000;
+    private static final int maxBaseNumToDisplay = 10000;
 
-    public static void init(String query, String dbVersion) throws Exception {
-        variantGeneScoreList.clear();
-        isRegionValid = true;
-
+    public static void init(String query, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         if (query.split("-").length == 4) { // search by variant id
-            initVariantListByVariantId(query, dbVersion);
+            initVariantListByVariantId(query, dbVersion, variantGeneScoreList);
         } else if (query.contains(":")) { // search by region
-            initVariantListByRegion(query, dbVersion);
+            initVariantListByRegion(query, dbVersion, variantGeneScoreList);
         } else if (query.split("-").length == 2) { // search by variant site
-            initVariantListByVariantSite(query, dbVersion);
+            initVariantListByVariantSite(query, dbVersion, variantGeneScoreList);
         } else if (query.startsWith("ENSG")) { // search by ENSG gene
-            initVariantListByEnsgGene(query, dbVersion);
+            initVariantListByEnsgGene(query, dbVersion, variantGeneScoreList);
         } else { // search by HGNC gene or return nothing found
-            initVariantListByHgncGene(query, dbVersion);
+            initVariantListByHgncGene(query, dbVersion, variantGeneScoreList);
         }
     }
 
-    public static void initVariantListByVariantSite(String site, String dbVersion) throws Exception {
+    public static void initVariantListByVariantSite(String site, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         String[] tmp = site.split("-"); // chr-pos
 
         String chr = tmp[0].replace("XY", "X");
@@ -73,7 +63,7 @@ public class Output {
         rset.close();
     }
 
-    public static void initVariantListByVariantId(String id, String dbVersion) throws Exception {
+    public static void initVariantListByVariantId(String id, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         String[] tmp = id.split("-"); // chr-pos-ref-alt
 
         String chr = tmp[0].replace("XY", "X");
@@ -109,7 +99,7 @@ public class Output {
         rset.close();
     }
 
-    public static void initVariantListByRegion(String region, String dbVersion) throws Exception {
+    public static void initVariantListByRegion(String region, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         String[] tmp = region.split(":"); // chr:start-end
 
         String chr = tmp[0].toLowerCase();
@@ -122,9 +112,7 @@ public class Output {
         int start = Integer.valueOf(tmp[0]);
         int end = Integer.valueOf(tmp[1]);
 
-        isRegionValid = isRegionValid(start, end);
-
-        if (isRegionValid) {
+        if (isRegionValid(start, end)) {
             String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
                     + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + chr + " v , "
                     + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
@@ -154,11 +142,11 @@ public class Output {
         }
     }
 
-    private static boolean isRegionValid(int start, int end) {
+    public static boolean isRegionValid(int start, int end) {
         return end - start <= maxBaseNumToDisplay;
     }
 
-    public static void initVariantListByEnsgGene(String ensg, String dbVersion) throws Exception {
+    public static void initVariantListByEnsgGene(String ensg, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         EnsgGene ensgGene = getEnsgGene(ensg, dbVersion);
 
         if (ensgGene == null) { // not a valid ensg gene
@@ -236,11 +224,11 @@ public class Output {
         return "";
     }
 
-    public static void initVariantListByHgncGene(String hgnc, String dbVersion) throws Exception {
+    public static void initVariantListByHgncGene(String hgnc, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         List<String> ensgList = getEnsgGeneNameByHgnc(hgnc, dbVersion);
 
         for (String ensg : ensgList) {
-            initVariantListByEnsgGene(ensg, dbVersion);
+            initVariantListByEnsgGene(ensg, dbVersion, variantGeneScoreList);
         }
     }
 

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -25,22 +26,27 @@ public class Search extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String dbVersion = initDBVersion(request);
+            List<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
 
             if (request.getParameter("query") != null) {
+
                 DBManager.init();
 
                 // search by gene or region or variant
                 String query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
 
-                Output.init(query, dbVersion);
+                checkRegionValid(request, query);
 
-                setRequest(request, query);
+                String dbVersion = initDBVersion(request);
+                Output.init(query, dbVersion, variantGeneScoreList);
+
+                request.setAttribute("query", query);
+                request.setAttribute("variantGeneScoreList", variantGeneScoreList);
             }
 
             final String content_type = request.getParameter("content-type");
             if ("text/xml".equals(content_type)) {
-                writeVariantsAsXml(request, response, Output.variantGeneScoreList);
+                writeVariantsAsXml(request, response, variantGeneScoreList);
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
@@ -57,14 +63,23 @@ public class Search extends HttpServlet {
             dbVersion = request.getParameter("version");
             request.getSession().setAttribute("version", dbVersion);
         }
-        
+
         return dbVersion;
     }
 
-    private void setRequest(HttpServletRequest request, String query) {
-        request.setAttribute("query", query);
-        request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
-        request.setAttribute("isRegionValid", Output.isRegionValid);
+    private void checkRegionValid(HttpServletRequest request, String query) {
+        boolean isRegionValid = true;
+
+        if (query.contains(":")) { // search region
+            String[] tmp = query.split(":"); // chr:start-end
+            tmp = tmp[1].split("-");
+            int start = Integer.valueOf(tmp[0]);
+            int end = Integer.valueOf(tmp[1]);
+
+            isRegionValid = Output.isRegionValid(start, end);
+        }
+
+        request.getSession().setAttribute("isRegionValid", isRegionValid);
     }
 
     @Override

@@ -4,7 +4,7 @@
 
 <%
     String query = (String) request.getAttribute("query");
-    Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
+    Boolean isRegionValid = (Boolean) request.getSession().getAttribute("isRegionValid");
     List<VariantGeneScore> variantGeneScoreList
             = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
