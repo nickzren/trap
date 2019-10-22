@@ -13,7 +13,6 @@ public class DBManager {
 
     private static DataSource dataSource;
 
-    public static String dbVersion;
     private static String dbUrl;
     private static String dbUser;
     private static String dbPassword;
@@ -89,7 +88,7 @@ public class DBManager {
         return dataSource.getConnection().prepareStatement(sqlQuery);
     }
 
-    public static String getDBName() {
+    public static String getDBName(String dbVersion) {
         return dbVersionNameMap.get(dbVersion);
     }
 }

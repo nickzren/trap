@@ -25,11 +25,7 @@ public class Search extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            if (DBManager.dbVersion == null) {
-                DBManager.dbVersion = "v3";
-            } else if (request.getParameter("version") != null) {
-                DBManager.dbVersion = request.getParameter("version");
-            }
+            String dbVersion = initDBVersion(request);
 
             if (request.getParameter("query") != null) {
                 DBManager.init();
@@ -37,7 +33,7 @@ public class Search extends HttpServlet {
                 // search by gene or region or variant
                 String query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
 
-                Output.init(query);
+                Output.init(query, dbVersion);
 
                 setRequest(request, query);
             }
@@ -54,8 +50,18 @@ public class Search extends HttpServlet {
         }
     }
 
+    private String initDBVersion(HttpServletRequest request) {
+        String dbVersion = (String) request.getSession().getAttribute("version");
+
+        if (request.getParameter("version") != null) {
+            dbVersion = request.getParameter("version");
+            request.getSession().setAttribute("version", dbVersion);
+        }
+        
+        return dbVersion;
+    }
+
     private void setRequest(HttpServletRequest request, String query) {
-        request.setAttribute("version", DBManager.dbVersion);
         request.setAttribute("query", query);
         request.setAttribute("variantGeneScoreList", Output.variantGeneScoreList);
         request.setAttribute("isRegionValid", Output.isRegionValid);

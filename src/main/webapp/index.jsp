@@ -32,13 +32,11 @@
                         </div>
 
                         <%
-                            String version = request.getParameter("version");
-                            if (version == null) {
-                                version = (String) request.getAttribute("version");
+                            String version = (String) request.getSession().getAttribute("version");
 
-                                if (version == null) {
-                                    version = "v3";
-                                }
+                            if (version == null) {
+                                version = "v3";
+                                request.getSession().setAttribute("version", version);
                             }
                         %>
 

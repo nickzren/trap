@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-md-10">
         <h4>
-            Data version: <mark><%=request.getAttribute("version")%></mark>
+            Data version: <mark><%=request.getSession().getAttribute("version")%></mark>
         </h4>
     </div>
 </div>

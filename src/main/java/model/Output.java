@@ -24,32 +24,32 @@ public class Output {
     public static final int maxRowToQuery = 5000;
     public static final int maxBaseNumToDisplay = 10000;
 
-    public static void init(String query) throws Exception {
+    public static void init(String query, String dbVersion) throws Exception {
         variantGeneScoreList.clear();
         isRegionValid = true;
 
         if (query.split("-").length == 4) { // search by variant id
-            initVariantListByVariantId(query);
+            initVariantListByVariantId(query, dbVersion);
         } else if (query.contains(":")) { // search by region
-            initVariantListByRegion(query);
+            initVariantListByRegion(query, dbVersion);
         } else if (query.split("-").length == 2) { // search by variant site
-            initVariantListByVariantSite(query);
+            initVariantListByVariantSite(query, dbVersion);
         } else if (query.startsWith("ENSG")) { // search by ENSG gene
-            initVariantListByEnsgGene(query);
+            initVariantListByEnsgGene(query, dbVersion);
         } else { // search by HGNC gene or return nothing found
-            initVariantListByHgncGene(query);
+            initVariantListByHgncGene(query, dbVersion);
         }
     }
 
-    public static void initVariantListByVariantSite(String site) throws Exception {
+    public static void initVariantListByVariantSite(String site, String dbVersion) throws Exception {
         String[] tmp = site.split("-"); // chr-pos
 
         String chr = tmp[0].replace("XY", "X");
         int pos = Integer.valueOf(tmp[1]);
 
         String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v,"
-                + DBManager.getDBName() + ".ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + chr + " v,"
+                + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
 
@@ -73,7 +73,7 @@ public class Output {
         rset.close();
     }
 
-    public static void initVariantListByVariantId(String id) throws Exception {
+    public static void initVariantListByVariantId(String id, String dbVersion) throws Exception {
         String[] tmp = id.split("-"); // chr-pos-ref-alt
 
         String chr = tmp[0].replace("XY", "X");
@@ -82,8 +82,8 @@ public class Output {
         String alt = tmp[3];
 
         String sql = "SELECT v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v , "
-                + DBManager.getDBName() + ".ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + chr + " v , "
+                + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.alt=? "
                 + "AND v.ensg_gene = g.ensg_gene";
@@ -109,7 +109,7 @@ public class Output {
         rset.close();
     }
 
-    public static void initVariantListByRegion(String region) throws Exception {
+    public static void initVariantListByRegion(String region, String dbVersion) throws Exception {
         String[] tmp = region.split(":"); // chr:start-end
 
         String chr = tmp[0].toLowerCase();
@@ -126,8 +126,8 @@ public class Output {
 
         if (isRegionValid) {
             String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                    + "FROM " + DBManager.getDBName() + ".snv_score_chr" + chr + " v , "
-                    + DBManager.getDBName() + ".ensg_hgnc_gene g "
+                    + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + chr + " v , "
+                    + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
                     + "WHERE v.pos BETWEEN ? AND ? "
                     + "AND v.ensg_gene = g.ensg_gene "
                     + "LIMIT " + maxRowToQuery;
@@ -158,21 +158,21 @@ public class Output {
         return end - start <= maxBaseNumToDisplay;
     }
 
-    public static void initVariantListByEnsgGene(String ensg) throws Exception {
-        EnsgGene ensgGene = getEnsgGene(ensg);
+    public static void initVariantListByEnsgGene(String ensg, String dbVersion) throws Exception {
+        EnsgGene ensgGene = getEnsgGene(ensg, dbVersion);
 
         if (ensgGene == null) { // not a valid ensg gene
             return;
         }
 
-        String hgncGene = getHgncGene(ensg);
+        String hgncGene = getHgncGene(ensg, dbVersion);
 
         if (hgncGene.isEmpty()) {
             return;
         }
 
         String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,v.score "
-                + "FROM " + DBManager.getDBName() + ".snv_score_chr" + ensgGene.getChr() + " v "
+                + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + ensgGene.getChr() + " v "
                 + "WHERE v.pos BETWEEN ? AND ? "
                 + "AND v.ensg_gene = ? "
                 + "LIMIT " + maxRowToQuery;
@@ -200,8 +200,8 @@ public class Output {
         rset.close();
     }
 
-    private static EnsgGene getEnsgGene(String ensg) throws Exception {
-        String sql = "SELECT * FROM " + DBManager.getDBName() + ".ensg_gene_region WHERE ensg_gene = ?";
+    private static EnsgGene getEnsgGene(String ensg, String dbVersion) throws Exception {
+        String sql = "SELECT * FROM " + DBManager.getDBName(dbVersion) + ".ensg_gene_region WHERE ensg_gene = ?";
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setString(1, ensg);
@@ -222,8 +222,8 @@ public class Output {
         return ensgGene;
     }
 
-    private static String getHgncGene(String ensg) throws Exception {
-        String sql = "SELECT hgnc_gene FROM " + DBManager.getDBName() + ".ensg_hgnc_gene WHERE ensg_gene = ?";
+    private static String getHgncGene(String ensg, String dbVersion) throws Exception {
+        String sql = "SELECT hgnc_gene FROM " + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene WHERE ensg_gene = ?";
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setString(1, ensg);
@@ -236,18 +236,18 @@ public class Output {
         return "";
     }
 
-    public static void initVariantListByHgncGene(String hgnc) throws Exception {
-        List<String> ensgList = getEnsgGeneNameByHgnc(hgnc);
+    public static void initVariantListByHgncGene(String hgnc, String dbVersion) throws Exception {
+        List<String> ensgList = getEnsgGeneNameByHgnc(hgnc, dbVersion);
 
         for (String ensg : ensgList) {
-            initVariantListByEnsgGene(ensg);
+            initVariantListByEnsgGene(ensg, dbVersion);
         }
     }
 
-    private static List<String> getEnsgGeneNameByHgnc(String hgnc) throws Exception {
+    private static List<String> getEnsgGeneNameByHgnc(String hgnc, String dbVersion) throws Exception {
         List<String> ensgList = new ArrayList<String>();
 
-        String sql = "SELECT ensg_gene FROM " + DBManager.getDBName() + ".ensg_hgnc_gene WHERE hgnc_gene = ?";
+        String sql = "SELECT ensg_gene FROM " + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene WHERE hgnc_gene = ?";
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setString(1, hgnc);
