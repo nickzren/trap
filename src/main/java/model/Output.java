@@ -14,6 +14,7 @@ import object.EnsgGene;
  */
 public class Output {
 
+    private static final int maxDisplayNum = 1000;
     private static final int maxRowToQuery = 5000;
     private static final int maxBaseNumToDisplay = 10000;
 
@@ -248,5 +249,15 @@ public class Output {
         rset.close();
 
         return ensgList;
+    }
+    
+    public static boolean isTruncated(List<VariantGeneScore> variantGeneScoreList) {
+        if (variantGeneScoreList.size() <= maxDisplayNum) {
+            return false;
+        } else {
+            // hack to restrict only display 1000 rows
+            variantGeneScoreList = variantGeneScoreList.subList(0, maxDisplayNum);
+            return true;
+        }
     }
 }

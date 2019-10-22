@@ -4,7 +4,8 @@
 
 <%
     String query = (String) request.getAttribute("query");
-    Boolean isRegionValid = (Boolean) request.getSession().getAttribute("isRegionValid");
+    Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
+    Boolean isTruncated = (Boolean) request.getAttribute("isTruncated");
     List<VariantGeneScore> variantGeneScoreList
             = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
@@ -13,7 +14,7 @@
 <div class="row">
     <div class="col-md-10">
         <h4>
-            Data version: <mark><%=request.getSession().getAttribute("version")%></mark>
+            Data version: <mark><%=request.getAttribute("version")%></mark>
         </h4>
     </div>
 </div>
@@ -46,6 +47,15 @@
 </div>
 <%
 } else {
+    if (isTruncated) {
+%>
+<div class="alert alert-warning" style="width:90%">
+    <h4>
+        Please notice that the displayed variant list is truncated. To obtain the full database please refer to the terms of use.
+    </h4>
+</div>
+<%
+    }
 %>  
 <table class="table table-striped">
     <thead>

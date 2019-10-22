@@ -23,9 +23,16 @@ import util.DBManager;
  */
 public class Search extends HttpServlet {
 
+    // it should change to use session instead, but having a issue lost session from alias site
+    private static String dbVersion = "v3";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            if (request.getParameter("version") != null) {
+                dbVersion = request.getParameter("version");
+            }
+
             List<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
 
             if (request.getParameter("query") != null) {
@@ -35,13 +42,15 @@ public class Search extends HttpServlet {
                 // search by gene or region or variant
                 String query = request.getParameter("query").toUpperCase().replaceAll("( )+", "");
 
-                checkRegionValid(request, query);
+                boolean isRegionValid = checkRegionValid(request, query);
 
-                String dbVersion = initDBVersion(request);
                 Output.init(query, dbVersion, variantGeneScoreList);
 
                 request.setAttribute("query", query);
+                request.setAttribute("version", dbVersion);
+                request.setAttribute("isTruncated", Output.isTruncated(variantGeneScoreList));
                 request.setAttribute("variantGeneScoreList", variantGeneScoreList);
+                request.setAttribute("isRegionValid", isRegionValid);
             }
 
             final String content_type = request.getParameter("content-type");
@@ -56,30 +65,17 @@ public class Search extends HttpServlet {
         }
     }
 
-    private String initDBVersion(HttpServletRequest request) {
-        String dbVersion = (String) request.getSession().getAttribute("version");
-
-        if (request.getParameter("version") != null) {
-            dbVersion = request.getParameter("version");
-            request.getSession().setAttribute("version", dbVersion);
-        }
-
-        return dbVersion;
-    }
-
-    private void checkRegionValid(HttpServletRequest request, String query) {
-        boolean isRegionValid = true;
-
+    private boolean checkRegionValid(HttpServletRequest request, String query) {
         if (query.contains(":")) { // search region
             String[] tmp = query.split(":"); // chr:start-end
             tmp = tmp[1].split("-");
             int start = Integer.valueOf(tmp[0]);
             int end = Integer.valueOf(tmp[1]);
 
-            isRegionValid = Output.isRegionValid(start, end);
+            return Output.isRegionValid(start, end);
+        } else {
+            return true;
         }
-
-        request.getSession().setAttribute("isRegionValid", isRegionValid);
     }
 
     @Override
