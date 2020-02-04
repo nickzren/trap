@@ -76,10 +76,7 @@
         %>
         <tr class="text-center">
             <td><a href="Search?query=<%=variant.getVariantId()%>">
-                    <%=variant.getVariantId()%></a> &nbsp 
-                <a target="_blank" href="https://varsome.com/variant/hg19/<%=variant.getVariantId()%>">
-                    <span class="label label-default">varsome</span>
-                </a>
+                    <%=variant.getVariantId()%></a>
             </td>
             <td><%=variant.getChr()%></td>
             <td><%=variant.getPos()%></td>
@@ -96,31 +93,6 @@
 </table>
 
 <%
-            // search variant
-            if(query.split("-").length == 4) 
-            {
-%>    
-    
-<br/>
-
-<div style="max-width: 900px; margin: 0 auto;">
-    <variant-request refgenome="hg19" query="<%=query%>"></variant-request>
-    <variant-details></variant-details>
-    <region-browser></region-browser>
-    <ncbi-clinvar></ncbi-clinvar>
-    <genes-results></genes-results>
-</div>
-
-<%
-            }
         }
     }
 %>
-
-<script>
-    var varsomeConfig = {
-        api_url: 'https://api.varsome.com',
-        static_token: 'fQ0dFl#wgsH4xuIZouU9*kMHZirF*SkY#4$hT?xJ'
-    }
-</script>
-<script src="https://assets.varsome.com/static/components/components-bundle.js"></script>
