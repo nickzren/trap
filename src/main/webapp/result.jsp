@@ -76,7 +76,10 @@
         %>
         <tr class="text-center">
             <td><a href="Search?query=<%=variant.getVariantId()%>">
-                    <%=variant.getVariantId()%></a>
+                    <%=variant.getVariantId()%></a> &nbsp 
+                <a target="_blank" href="https://franklin.genoox.com/variant/snp/chr<%=variant.getVariantId()%>">
+                    <span class="label label-default">franklin</span>
+                </a>
             </td>
             <td><%=variant.getChr()%></td>
             <td><%=variant.getPos()%></td>
@@ -93,6 +96,30 @@
 </table>
 
 <%
+            // search variant
+            String[] tmp = query.split("-"); // chr-pos-ref-alt
+            if(tmp.length == 4) 
+            {
+%>    
+    
+<br/>
+
+<gnx-acmg-classification></gnx-acmg-classification>
+<script src="https://s3.amazonaws.com/resources.genoox.com/assets/gnx-elements.js"></script>
+<script>
+  let elem = document.querySelector('gnx-acmg-classification');
+  elem.variantId = {
+    ref: '<%=tmp[2]%>',
+    alt: '<%=tmp[3]%>',
+    chr: 'chr<%=tmp[0]%>',
+    pos: <%=tmp[1]%>,
+  };
+</script>
+
+<%
+            }
         }
     }
 %>
+
+

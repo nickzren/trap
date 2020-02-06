@@ -4,6 +4,7 @@
     <meta name="description" content="Transcript inferred Pathogenicity Score (trap-score)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/resources.genoox.com/assets/gnx-elements.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
