@@ -24,7 +24,7 @@ public class DBManager {
             initDBVersion();
 
             initDataFromSystemConfig();
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             statement = connection.createStatement();
         } else if (statement.isClosed()) {
@@ -50,7 +50,7 @@ public class DBManager {
 
             // local config
 //             the config below is for MySQL 8
-//            dbUrl = "jdbc:mysql://localhost:3306/trap_v3?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT";
+//            dbUrl = "jdbc:mysql://localhost:3306/trap_v3";
 //            dbUser = "test";
 //            dbPassword = "test";
         } catch (Exception e) {

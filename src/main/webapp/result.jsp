@@ -104,10 +104,10 @@
     
 <br/>
 
-<gnx-acmg-classification></gnx-acmg-classification>
-<script src="https://s3.amazonaws.com/resources.genoox.com/assets/gnx-elements.js"></script>
+<gnx-summary></gnx-summary>
+<script src="https://s3.amazonaws.com/resources.genoox.com/assets/1.0/gnx-elements.js"></script>
 <script>
-  let elem = document.querySelector('gnx-acmg-classification');
+  let elem = document.querySelector('gnx-summary');
   elem.variantId = {
     ref: '<%=tmp[2]%>',
     alt: '<%=tmp[3]%>',
