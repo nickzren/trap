@@ -23,6 +23,14 @@
     <div class="col-md-10">
         <h4>
             Search: <mark><%=query%></mark>
+            <%
+                if(query.split("-").length == 4) {
+            %>
+                &nbsp;
+                <a class="btn btn-default" href="http://atavdb.org/Search?query=${query}" target="_blank">ATAVDB</a> 
+            <%
+                }
+            %>
         </h4>
     </div>
 </div>
@@ -80,6 +88,8 @@
                 <a target="_blank" href="https://franklin.genoox.com/variant/snp/chr<%=variant.getVariantId()%>">
                     <span class="label label-default">franklin</span>
                 </a>
+                &nbsp;
+                <a href="http://atavdb.org/Search?query=<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">atavdb</span></a> 
             </td>
             <td><%=variant.getChr()%></td>
             <td><%=variant.getPos()%></td>
