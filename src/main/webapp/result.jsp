@@ -27,7 +27,13 @@
                 if(query.split("-").length == 4) {
             %>
                 &nbsp;
-                <a class="btn btn-default" href="http://atavdb.org/variant/${query}" target="_blank">ATAVDB</a> 
+                <a class="btn btn-default" href="http://atavdb.org/variant/${query}" target="_blank">ATAV</a> 
+                
+                &nbsp;
+                <a class="btn btn-default" href="https://franklin.genoox.com/variant/snp/chr${query}" target="_blank">Franklin</a> 
+                
+                &nbsp;
+                <a class="btn btn-default" href="https://varsome.com/variant/hg19/${query}" target="_blank">VarSome</a> 
             <%
                 }
             %>
@@ -84,12 +90,14 @@
         %>
         <tr class="text-center">
             <td><a href="Search?query=<%=variant.getVariantId()%>">
-                    <%=variant.getVariantId()%></a> &nbsp 
+                    <%=variant.getVariantId()%></a> &nbsp;
+                <a href="http://atavdb.org/variant/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">atav</span></a> 
+                &nbsp;
                 <a target="_blank" href="https://franklin.genoox.com/variant/snp/chr<%=variant.getVariantId()%>">
                     <span class="label label-default">franklin</span>
                 </a>
                 &nbsp;
-                <a href="http://atavdb.org/variant/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">atavdb</span></a> 
+                <a href="https://varsome.com/variant/hg19/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">varsome</span></a> 
             </td>
             <td><%=variant.getChr()%></td>
             <td><%=variant.getPos()%></td>
