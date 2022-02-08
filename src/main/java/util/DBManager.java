@@ -1,7 +1,6 @@
 package util;
 
 import java.sql.*;
-import java.util.HashMap;
 
 /**
  *
@@ -15,29 +14,16 @@ public class DBManager {
     private static String dbUrl;
     private static String dbUser;
     private static String dbPassword;
-    private static HashMap<String, String> dbVersionNameMap = new HashMap<String, String>();
-
-    private static String dbVersionName = "v1:vdsdb,v2:trap_v2_060117,v3:trap_v3";
 
     public static void init() throws Exception {
         if (connection == null || connection.isClosed()) {
-            initDBVersion();
-
+ 
             initDataFromSystemConfig();
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             statement = connection.createStatement();
         } else if (statement.isClosed()) {
             statement = connection.createStatement();
-        }
-    }
-
-    private static void initDBVersion() {
-        for (String str : dbVersionName.split(",")) {
-            String version = str.split(":")[0];
-            String name = str.split(":")[1];
-
-            dbVersionNameMap.put(version, name);
         }
     }
 
@@ -50,7 +36,7 @@ public class DBManager {
 
             // local config
 //             the config below is for MySQL 8
-//            dbUrl = "jdbc:mysql://localhost:3306/trap_v3";
+//            dbUrl = "jdbc:mysql://127.0.0.1:3306/trap_v3?serverTimezone=UTC";
 //            dbUser = "test";
 //            dbPassword = "test";
         } catch (Exception e) {
@@ -66,7 +52,11 @@ public class DBManager {
         return connection.prepareStatement(sqlQuery);
     }
 
-    public static String getDBName(String dbVersion) {
-        return dbVersionNameMap.get(dbVersion);
+    public static String getDBName(String version) {
+        if(version.equals("hg19")) {
+            return "trap_v3";
+        } else {
+            return "trap_v3_hg38";
+        }
     }
 }

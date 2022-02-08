@@ -43,6 +43,9 @@ public class Output {
                 + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
+        
+        System.out.println(sql);
+        
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
         stmt.setInt(1, pos);
@@ -162,14 +165,11 @@ public class Output {
 
         String sql = "SELECT v.pos,v.ref,v.alt,v.ensg_gene,v.score "
                 + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + ensgGene.getChr() + " v "
-                + "WHERE v.pos BETWEEN ? AND ? "
-                + "AND v.ensg_gene = ? "
+                + "WHERE v.ensg_gene = ? "
                 + "LIMIT " + maxRowToQuery;
 
         PreparedStatement stmt = DBManager.prepareStatement(sql);
-        stmt.setInt(1, ensgGene.getStart());
-        stmt.setInt(2, ensgGene.getEnd());
-        stmt.setString(3, ensgGene.getName());
+        stmt.setString(1, ensgGene.getName());
         ResultSet rset = stmt.executeQuery();
 
         while (rset.next()) {

@@ -12,7 +12,7 @@
                 <h3 class="page-header">Contact</h3>
 
                 <address>
-                    <strong>Sahar Gelfman (Author)</strong><br>
+                    <strong>Sahar Gelfman</strong><br>
                     Email: 
                         <a href="mailto: sg3261@cumc.columbia.edu" target="_blank">
                             <i class="fa fa-envelope-o">
@@ -22,7 +22,7 @@
                 </address>
 
                 <address>
-                    <strong>Nick Ren (Web Administrator)</strong><br>
+                    <strong>Nick Ren</strong><br>
                     Email: 
                     <a href="mailto: z.ren@columbia.edu" target="_blank">
                         <i class="fa fa-envelope-o">

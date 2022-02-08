@@ -23,15 +23,17 @@ import util.DBManager;
  */
 public class Search extends HttpServlet {
 
-    // it should change to use session instead, but having a issue lost session from alias site
-    private static String dbVersion = "v3";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            String version = "hg19";
             if (request.getParameter("version") != null) {
-                dbVersion = request.getParameter("version");
+                version = request.getParameter("version");
+            } else if(request.getSession().getAttribute("version") != null) {
+                version = (String) request.getSession().getAttribute("version");
             }
+            request.setAttribute("version", version);
+            request.getSession().setAttribute("version", version);
 
             List<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
 
@@ -44,10 +46,9 @@ public class Search extends HttpServlet {
 
                 boolean isRegionValid = checkRegionValid(request, query);
 
-                Output.init(query, dbVersion, variantGeneScoreList);
+                Output.init(query, version, variantGeneScoreList);
 
                 request.setAttribute("query", query);
-                request.setAttribute("version", dbVersion);
                 request.setAttribute("isTruncated", Output.isTruncated(variantGeneScoreList));
                 request.setAttribute("variantGeneScoreList", variantGeneScoreList);
                 request.setAttribute("isRegionValid", isRegionValid);
@@ -60,7 +61,7 @@ public class Search extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-//            request.setAttribute("errorMsg4Debug", ex.toString());
+            request.setAttribute("errorMsg4Debug", ex.toString());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }

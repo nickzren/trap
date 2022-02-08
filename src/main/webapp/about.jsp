@@ -22,6 +22,14 @@
                 <p>
                     TraP is pre-computed for all possible substitutions of 20,686 human protein coding genes, covering ~1.3 billion genomic positions based on the hg19 genome assembly. Since TraP considers features of the gene itself when calculating the score,  variants that reside in two overlapping genes will have two different scores, depending on each gene’s unique features.
                 </p>
+                
+                <br/>
+
+                <h4>TraP News, 2/2022:</h4>
+
+                <p>
+                    TraP version 3.0 has been lifted-over to hg38. The new TraP-score uses the same model as TraP v3, yet points to hg38 positions to make it easier for researchers that work on hg38. In the process of lifting over, approximately 99.95% of the TraP v3 scores are successfully converted to hg38 positions, yet in some rare cases the lift over is not successful. In the cases where a variant position is within an hg38 gene coordinates, but does not have a TraP score available on the webserver, we recommend examining the TraP-score for the variant’s hg19 position using TraP v3. 
+                </p>
 
                 <br/>
 
