@@ -18,29 +18,29 @@ public class Output {
     private static final int maxRowToQuery = 5000;
     private static final int maxBaseNumToDisplay = 10000;
 
-    public static void init(String query, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
+    public static void init(String query, String build, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         if (query.split("-").length == 4) { // search by variant id
-            initVariantListByVariantId(query, dbVersion, variantGeneScoreList);
+            initVariantListByVariantId(query, build, variantGeneScoreList);
         } else if (query.contains(":")) { // search by region
-            initVariantListByRegion(query, dbVersion, variantGeneScoreList);
+            initVariantListByRegion(query, build, variantGeneScoreList);
         } else if (query.split("-").length == 2) { // search by variant site
-            initVariantListByVariantSite(query, dbVersion, variantGeneScoreList);
+            initVariantListByVariantSite(query, build, variantGeneScoreList);
         } else if (query.startsWith("ENSG")) { // search by ENSG gene
-            initVariantListByEnsgGene(query, dbVersion, variantGeneScoreList);
+            initVariantListByEnsgGene(query, build, variantGeneScoreList);
         } else { // search by HGNC gene or return nothing found
-            initVariantListByHgncGene(query, dbVersion, variantGeneScoreList);
+            initVariantListByHgncGene(query, build, variantGeneScoreList);
         }
     }
 
-    public static void initVariantListByVariantSite(String site, String dbVersion, List<VariantGeneScore> variantGeneScoreList) throws Exception {
+    public static void initVariantListByVariantSite(String site, String build, List<VariantGeneScore> variantGeneScoreList) throws Exception {
         String[] tmp = site.split("-"); // chr-pos
 
         String chr = tmp[0].replace("XY", "X");
         int pos = Integer.valueOf(tmp[1]);
 
         String sql = "SELECT v.ref,v.alt,v.ensg_gene,g.hgnc_gene,v.score "
-                + "FROM " + DBManager.getDBName(dbVersion) + ".snv_score_chr" + chr + " v,"
-                + DBManager.getDBName(dbVersion) + ".ensg_hgnc_gene g "
+                + "FROM " + DBManager.getDBName(build) + ".snv_score_chr" + chr + " v,"
+                + DBManager.getDBName(build) + ".ensg_hgnc_gene g "
                 + "WHERE v.pos = ? "
                 + "AND v.ensg_gene = g.ensg_gene";
         

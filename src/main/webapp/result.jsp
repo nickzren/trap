@@ -3,49 +3,16 @@
 <%@page import="java.util.Map"%>
 
 <%
-    String query = (String) request.getAttribute("query");
+    String q = (String) request.getAttribute("query");
     Boolean isRegionValid = (Boolean) request.getAttribute("isRegionValid");
     Boolean isTruncated = (Boolean) request.getAttribute("isTruncated");
     List<VariantGeneScore> variantGeneScoreList
             = (List<VariantGeneScore>) request.getAttribute("variantGeneScoreList");
 
-    if (query != null) {
-        String v = (String) request.getAttribute("version");
-%>
-<div class="row">
-    <div class="col-md-10">
-        <h4>
-            Data version: <mark>v3 <%=v%></mark>
-        </h4>
-    </div>
-</div>
+    if (q != null) {
+        String b = (String) request.getAttribute("build");
 
-<div class="row">
-    <div class="col-md-10">
-        <h4>
-            Search: <mark><%=query%></mark>
-            <%
-                if(query.split("-").length == 4 && v.equals("hg19")) {
-            %>
-                &nbsp;
-                <a class="btn btn-default" href="http://atavdb.org/variant/${query}" target="_blank">ATAV</a> 
-                
-                &nbsp;
-                <a class="btn btn-default" href="https://franklin.genoox.com/variant/snp/chr${query}" target="_blank">Franklin</a> 
-                
-                &nbsp;
-                <a class="btn btn-default" href="https://varsome.com/variant/hg19/${query}" target="_blank">VarSome</a> 
-            <%
-                }
-            %>
-        </h4>
-    </div>
-</div>
-
-<br/>
-
-<%
-    if (!isRegionValid) {
+        if (!isRegionValid) {
 %>
 <div class="alert alert-warning" style="width:50%">
     <h4>
@@ -93,9 +60,9 @@
             <td>
                 <a href="Search?query=<%=variant.getVariantId()%>">
                     <%=variant.getVariantId()%></a>
-                <%
-                    if(v.equals("hg19")) {
-                %>
+                    <%
+                        if (b.equals("hg19")) {
+                    %>
                 &nbsp;
                 <a href="http://atavdb.org/variant/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">atav</span></a> 
                 &nbsp;
@@ -104,13 +71,13 @@
                 </a>
                 &nbsp;
                 <a href="https://varsome.com/variant/hg19/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">varsome</span></a>
-                <%} else { %>
-                    &nbsp;
-                    <a target="_blank" href="https://franklin.genoox.com/clinical-db/variant/snp/chr<%=variant.getVariantId()%>-hg38">
+                <%} else {%>
+                &nbsp;
+                <a target="_blank" href="https://franklin.genoox.com/clinical-db/variant/snp/chr<%=variant.getVariantId()%>-hg38">
                     <span class="label label-default">franklin</span>
-                    </a>
-                    &nbsp;
-                    <a href="https://varsome.com/variant/hg38/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">varsome</span></a>
+                </a>
+                &nbsp;
+                <a href="https://varsome.com/variant/hg38/<%=variant.getVariantId()%>" target="_blank"><span class="label label-default">varsome</span></a>
                 <%}%>
             </td>
             <td><%=variant.getChr()%></td>
@@ -128,24 +95,23 @@
 </table>
 
 <%
-            // search variant
-            String[] tmp = query.split("-"); // chr-pos-ref-alt
-            if(tmp.length == 4 && v.equals("hg19")) 
-            {
+    // search variant
+    String[] tmp = q.split("-"); // chr-pos-ref-alt
+    if (tmp.length == 4 && b.equals("hg19")) {
 %>    
-    
+
 <br/>
 
 <gnx-summary></gnx-summary>
 <script src="https://s3.amazonaws.com/resources.genoox.com/assets/1.0/gnx-elements.js"></script>
 <script>
-  let elem = document.querySelector('gnx-summary');
-  elem.variantId = {
-    ref: '<%=tmp[2]%>',
-    alt: '<%=tmp[3]%>',
-    chr: 'chr<%=tmp[0]%>',
-    pos: <%=tmp[1]%>,
-  };
+    let elem = document.querySelector('gnx-summary');
+    elem.variantId = {
+        ref: '<%=tmp[2]%>',
+        alt: '<%=tmp[3]%>',
+        chr: 'chr<%=tmp[0]%>',
+        pos: <%=tmp[1]%>,
+    };
 </script>
 
 <%

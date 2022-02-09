@@ -26,14 +26,14 @@ public class Search extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String version = "hg19";
-            if (request.getParameter("version") != null) {
-                version = request.getParameter("version");
-            } else if(request.getSession().getAttribute("version") != null) {
-                version = (String) request.getSession().getAttribute("version");
+            String build = "hg19";
+            if (request.getParameter("build") != null) {
+                build = request.getParameter("build");
+            } else if(request.getSession().getAttribute("build") != null) {
+                build = (String) request.getSession().getAttribute("build");
             }
-            request.setAttribute("version", version);
-            request.getSession().setAttribute("version", version);
+            request.setAttribute("build", build);
+            request.getSession().setAttribute("build", build);
 
             List<VariantGeneScore> variantGeneScoreList = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class Search extends HttpServlet {
 
                 boolean isRegionValid = checkRegionValid(request, query);
 
-                Output.init(query, version, variantGeneScoreList);
+                Output.init(query, build, variantGeneScoreList);
 
                 request.setAttribute("query", query);
                 request.setAttribute("isTruncated", Output.isTruncated(variantGeneScoreList));
