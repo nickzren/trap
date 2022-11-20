@@ -19,7 +19,7 @@ public class DBManager {
         if (connection == null || connection.isClosed()) {
  
             initDataFromSystemConfig();
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             statement = connection.createStatement();
         } else if (statement.isClosed()) {
