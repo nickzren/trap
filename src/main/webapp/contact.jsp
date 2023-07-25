@@ -14,33 +14,11 @@
                 <address>
                     <strong>Sahar Gelfman</strong><br>
                     Email: 
-                        <a href="mailto: sg3261@cumc.columbia.edu" target="_blank">
+                        <a href="mailto: sahargel@gmail.com" target="_blank">
                             <i class="fa fa-envelope-o">
-                                sg3261@cumc.columbia.edu
+                                sahargel@gmail.com
                             </i>
                         </a>
-                </address>
-
-                <address>
-                    <strong>Nick Ren</strong><br>
-                    Email: 
-                    <a href="mailto: z.ren@columbia.edu" target="_blank">
-                        <i class="fa fa-envelope-o">
-                            z.ren@columbia.edu
-                        </i>
-                    </a>
-                </address>
-
-                <address>
-                    <strong>
-                        <a class="black" href="http://igm.columbia.edu" target="_blank">
-                            Institute for Genomic Medicine
-                        </a>
-                    </strong><br>
-                    Columbia University Medical Center<br>
-                    701 W 168th Street<br>
-                    Hammer Building 1408<br>
-                    New York, NY 10032
                 </address>
             </div>
         </div>
