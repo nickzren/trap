@@ -24,8 +24,6 @@
 
             <div class="container-main">            
 
-                <h4 class="alert alert-success" role="alert"><strong>TraP v3 has been lifted-over to hg38! (Feb 2022)</strong></h4>
-
                 <div class="jumbotron" style="padding:20px 40px 20px 50px">
                     <h2>TraP-score v3.0 Browser
                         <span class="badge badge-pill badge-secondary"><%=build%></span>
